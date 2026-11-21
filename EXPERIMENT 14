@@ -1,0 +1,80 @@
+EXPERIMENT 14 – AUTOMATING CHECKBOX AND RADIO BUTTON SELECTION USING SELENIUM
+
+AIM
+To write a Selenium WebDriver program to automate checkbox and radio button selection.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Open the checkboxes page and collect all checkboxes using findElements().
+3. Check the initial state using isSelected().
+4. Select the first checkbox and clear the second checkbox using click().
+5. Open the web form page and select the second radio button.
+6. Print the selection states and close the browser.
+CODE
+Exercise14.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.List;
+
+public class Exercise14 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            driver.get("https://the-internet.herokuapp.com/checkboxes");
+
+            List<WebElement> boxes = driver.findElements(
+                By.cssSelector("input[type='checkbox']")
+            );
+
+            System.out.println("Checkbox 1 initially selected : "
+                + boxes.get(0).isSelected());
+
+            System.out.println("Checkbox 2 initially selected : "
+                + boxes.get(1).isSelected());
+
+            if (!boxes.get(0).isSelected())
+                boxes.get(0).click();
+
+            if (boxes.get(1).isSelected())
+                boxes.get(1).click();
+
+            System.out.println("Checkbox 1 after click : "
+                + boxes.get(0).isSelected());
+
+            System.out.println("Checkbox 2 after click : "
+                + boxes.get(1).isSelected());
+
+            driver.get("https://www.selenium.dev/selenium/web/web-form.html");
+
+            driver.findElement(By.id("my-radio-2")).click();
+
+            System.out.println("Radio 1 selected : "
+                + driver.findElement(By.id("my-radio-1")).isSelected());
+
+            System.out.println("Radio 2 selected : "
+                + driver.findElement(By.id("my-radio-2")).isSelected());
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+- Checkbox 1: Initially unchecked
+- Checkbox 2: Initially checked
+- Radio button: Select the second option
+OUTPUT
+Checkbox 1 initially selected : false
+Checkbox 2 initially selected : true
+Checkbox 1 after click : true
+Checkbox 2 after click : false
+Radio 1 selected : false
+Radio 2 selected : true
+
+
+RESULT
+Thus, the Selenium WebDriver program to automate checkbox and radio button selection was executed successfully and the output was verified.
