@@ -1,0 +1,69 @@
+EXPERIMENT 13 – AUTOMATING WEB FORM FILLING AND SUBMISSION USING SELENIUM
+
+AIM
+To write a Selenium WebDriver program to automate the filling and submission of a web form.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Open the sample web form page.
+3. Enter text, password and comment using sendKeys().
+4. Click the Submit button using click().
+5. Read the heading and message of the result page.
+6. Close the browser.
+CODE
+Exercise13.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise13 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            driver.get(
+                "https://www.selenium.dev/selenium/web/web-form.html"
+            );
+
+            System.out.println("Page title : " + driver.getTitle());
+
+            driver.findElement(By.name("my-text"))
+                .sendKeys("Student");
+
+            driver.findElement(By.name("my-password"))
+                .sendKeys("Secret@123");
+
+            driver.findElement(By.name("my-textarea"))
+                .sendKeys("Automated using Selenium WebDriver");
+
+            driver.findElement(
+                By.cssSelector("button[type='submit']")
+            ).click();
+
+            System.out.println("Heading : " +
+                driver.findElement(By.tagName("h1")).getText());
+
+            System.out.println("Message : " +
+                driver.findElement(By.id("message")).getText());
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+Field	Input
+Text	Student
+Password	Secret@123
+Comment	Automated using Selenium WebDriver
+
+OUTPUT
+Page title : Web form
+Heading : Form submitted
+Message : Received!
+
+
+RESULT
+Thus, the Selenium WebDriver program to automate the filling and submission of a web form was executed successfully and the output was verified.
