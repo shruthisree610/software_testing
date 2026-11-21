@@ -1,0 +1,35 @@
+EXPERIMENT 1 – IDENTIFICATION AND DOCUMENTATION OF SOFTWARE DEFECTS IN ATM SYSTEM
+
+AIM
+To examine an ATM system specification, identify software defects and document them using black-box testing techniques.
+
+ALGORITHM
+1. Select the ATM system and study its specifications.
+2. Identify features such as card validation, PIN verification and cash withdrawal.
+3. Prepare test cases with valid and invalid inputs.
+4. Execute each test case and compare expected and actual results.
+5. Identify and confirm defects by repeating failed test cases.
+6. Record defect ID, description, severity, priority and screenshots.
+
+CODE
+This is a manual testing experiment. No programming code is required.
+
+INPUT
+Parameter	Input
+Card	Valid ATM card
+PIN	1234
+Account balance	₹25,000
+Transaction limit	₹10,000
+Daily limit	₹40,000
+Withdrawal amount	₹5,000
+
+OUTPUT
+Test Case	Expected Result	Status
+Valid card and PIN	Login successful	Pass
+Invalid PIN	Error message displayed	Pass
+Withdrawal ₹5,000	Cash withdrawal successful	Pass
+Withdrawal ₹10,100	Transaction rejected	Pass
+Withdrawal ₹250	Invalid denomination rejected	Pass
+
+RESULT
+Thus, the ATM system was tested using manual black-box testing. Test cases were executed, and software defects were identified and documented successfully.
