@@ -1,0 +1,30 @@
+EXPERIMENT 3 – DEFECT REPORT FOR WEB-BASED FORM SUBMISSION APPLICATION
+
+AIM
+To create defect reports for a web-based form submission application by identifying and documenting software defects.
+
+ALGORITHM
+1. Open the registration or contact form.
+2. Enter valid, invalid, blank and boundary values.
+3. Compare the expected and actual results.
+4. Repeat failed test steps to confirm defects.
+5. Record defect ID, severity, priority and reproduction steps.
+6. Attach screenshots and prepare the final defect reports.
+
+CODE
+This is a manual testing experiment. No programming code is required.
+
+INPUT
+Field	Test Input
+Email	abc.com
+Name	Three spaces
+Mobile number	abcdefghij
+
+OUTPUT
+Defect ID	Defect Identified	Severity
+WF-001	Invalid email accepted	Major
+WF-002	Blank name accepted	Minor
+WF-003	Letters accepted in mobile number	Major
+
+RESULT
+Thus, defect reports were created successfully with defect IDs, reproduction steps, expected results, actual results and severity details.
