@@ -1,0 +1,42 @@
+EXPERIMENT 18 – HTTP REQUEST DEFAULTS AND HEADER MANAGER USING APACHE JMETER
+
+AIM
+To use Apache JMeter to configure HTTP Request Defaults and HTTP Header Manager for REST API requests.
+ALGORITHM
+1. Start Apache JMeter and create a Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 2, Ramp-up Period = 2 seconds and Loop Count = 1.
+4. Add HTTP Request Defaults and enter the protocol and server name.
+5. Add HTTP Header Manager with Content-Type and Accept as application/json.
+6. Add two HTTP Request samplers: GET /posts/1 and GET /users/1.
+7. Add View Results Tree and Summary Report listeners.
+8. Run the plan and verify the JSON responses.
+TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	2
+Thread Group	Ramp-up Period	2 seconds
+Thread Group	Loop Count	1
+HTTP Request Defaults	Protocol	https
+HTTP Request Defaults	Server Name	jsonplaceholder.typicode.com
+HTTP Header Manager	Content-Type	application/json
+HTTP Header Manager	Accept	application/json
+HTTP Request 1	Method / Path	GET /posts/1
+HTTP Request 2	Method / Path	GET /users/1
+
+INPUT
+- Server: jsonplaceholder.typicode.com
+- Request 1: GET /posts/1
+- Request 2: GET /users/1
+- Number of users: 2
+OUTPUT
+Summary Report
+Label	Samples	Error %
+GET /posts/1	2	0.00%
+GET /users/1	2	0.00%
+TOTAL	4	0.00%
+
+View Results Tree:
+- Response code: 200
+- Response body contains "id": 1 and "name": "Leanne Graham".
+RESULT
+Thus, Apache JMeter was used to configure HTTP Request Defaults and HTTP Header Manager for REST API requests, and the results were verified.
