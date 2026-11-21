@@ -1,0 +1,66 @@
+EXPERIMENT 8 – STRING REVERSAL USING JUNIT
+
+AIM
+To write JUnit test cases to reverse a given string and validate the output using JUnit assertions.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 dependency.
+2. Create a class named StringUtil.
+3. Write the reverse() method using StringBuilder.
+4. Create StringUtilTest with different string inputs.
+5. Use assertEquals(), assertNotNull() and assertNull() to verify results.
+6. Run the tests using mvn test.
+CODE
+StringUtil.java
+public class StringUtil {
+    public static String reverse(String s) {
+        if (s == null) {
+            return null;
+        }
+        return new StringBuilder(s).reverse().toString();
+    }
+}
+
+
+StringUtilTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class StringUtilTest {
+    @Test
+    void reverseOfWord() {
+        String result = StringUtil.reverse("hello");
+        assertNotNull(result);
+        assertEquals("olleh", result);
+    }
+
+    @Test
+    void emptyStringAndPalindrome() {
+        assertEquals("", StringUtil.reverse(""));
+        assertEquals("madam", StringUtil.reverse("madam"));
+    }
+
+    @Test
+    void nullInputReturnsNull() {
+        assertNull(StringUtil.reverse(null));
+    }
+}
+
+
+INPUT
+Input	Expected Output
+hello	olleh
+Empty string	Empty string
+madam	madam
+null	null
+
+OUTPUT
+Tests run: 3
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases were executed successfully to reverse strings and validate the results using assertions.
