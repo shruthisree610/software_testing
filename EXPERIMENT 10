@@ -1,0 +1,116 @@
+EXPERIMENT 10 – PASSWORD HASHING AND AUTHENTICATION USING JUNIT
+
+AIM
+To write JUnit test cases to implement security testing for password hashing and authentication using JUnit assertions.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 dependency.
+2. Create AuthService with a hash() method using SHA-256.
+3. Implement register() to store the hashed password and login() to compare password hashes.
+4. Create AuthServiceTest to verify repeatability, hash length and password security.
+5. Test login with correct and incorrect passwords.
+6. Run the tests using mvn test.
+CODE
+AuthService.java
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AuthService {
+    private final Map<String, String> users = new HashMap<>();
+
+    public static String hash(String text) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] digest = md.digest(
+            text.getBytes(StandardCharsets.UTF_8)
+        );
+
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
+    public void register(String user, String password)
+            throws Exception {
+        users.put(user, hash(password));
+    }
+
+    public boolean login(String user, String password)
+            throws Exception {
+        return users.containsKey(user)
+            && users.get(user).equals(hash(password));
+    }
+}
+
+
+AuthServiceTest.java
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class AuthServiceTest {
+    private AuthService auth;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        auth = new AuthService();
+        auth.register("student", "Secret@123");
+    }
+
+    @Test
+    void hashIsRepeatable() throws Exception {
+        assertEquals(
+            AuthService.hash("Secret@123"),
+            AuthService.hash("Secret@123")
+        );
+    }
+
+    @Test
+    void hashIsDifferentFromPlainPassword()
+            throws Exception {
+        assertNotEquals(
+            "Secret@123",
+            AuthService.hash("Secret@123")
+        );
+    }
+
+    @Test
+    void hashHas64HexCharacters() throws Exception {
+        assertEquals(64,
+            AuthService.hash("Secret@123").length());
+    }
+
+    @Test
+    void loginWithCorrectPassword() throws Exception {
+        assertTrue(auth.login("student", "Secret@123"));
+    }
+
+    @Test
+    void loginWithWrongPassword() throws Exception {
+        assertFalse(auth.login("student", "secret@123"));
+    }
+}
+
+
+INPUT
+Test	Input
+Register	student, Secret@123
+Correct login	student, Secret@123
+Wrong login	student, secret@123
+Hash length	64 characters
+
+OUTPUT
+Running AuthServiceTest
+
+Tests run: 5
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases for password hashing and authentication were executed successfully and the output was verified.
