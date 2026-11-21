@@ -1,0 +1,40 @@
+EXPERIMENT 19 – SIMULATING USER THINK TIME USING CONSTANT TIMER IN APACHE JMETER
+
+AIM
+To use Apache JMeter to simulate user think time using the Constant Timer.
+ALGORITHM
+1. Start Apache JMeter and create a Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 5, Ramp-up Period = 5 seconds and Loop Count = 3.
+4. Add an HTTP Request sampler for the home page (GET /).
+5. Add a Constant Timer and set Thread Delay = 2000 milliseconds.
+6. Run the plan with the timer enabled.
+7. Disable the timer and run the plan again.
+8. Compare the throughput of both runs.
+TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	5
+Thread Group	Ramp-up Period	5 seconds
+Thread Group	Loop Count	3
+HTTP Request	Protocol	https
+HTTP Request	Server Name	the-internet.herokuapp.com
+HTTP Request	Method / Path	GET /
+Constant Timer	Thread Delay	2000 milliseconds
+
+INPUT
+- Number of users: 5
+- Loop count: 3
+- Timer delay: 2000 milliseconds (2 seconds)
+- Total samples: \(5 \times 3 = 15\)
+OUTPUT
+Summary Report (Timer Enabled)
+Label	Samples	Error %	Throughput
+Home Page	15	0.00%	Lower value/sec
+
+Summary Report (Timer Disabled)
+Label	Samples	Error %	Throughput
+Home Page	15	0.00%	Higher value/sec
+
+Throughput values depend on the system and network.
+RESULT
+Thus, Apache JMeter was used to simulate user think time using the Constant Timer, and the results were verified.
