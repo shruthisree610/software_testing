@@ -1,0 +1,78 @@
+EXPERIMENT 7 – PRIME NUMBER CHECKING USING JUNIT
+
+AIM
+To write JUnit test cases to check whether a number is prime and validate the output using JUnit assertions.
+
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 dependency.
+2. Create a class named PrimeUtil.
+3. Write the isPrime() method to check whether a number is prime.
+4. Create PrimeUtilTest with prime and composite number test cases.
+5. Use assertTrue() and assertFalse() to verify the results.
+6. Run the tests using mvn test.
+CODE
+PrimeUtil.java
+public class PrimeUtil {
+    public static boolean isPrime(int n) {
+        if (n < 2) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
+PrimeUtilTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class PrimeUtilTest {
+    @Test
+    void primeNumbers() {
+        assertTrue(PrimeUtil.isPrime(2));
+        assertTrue(PrimeUtil.isPrime(3));
+        assertTrue(PrimeUtil.isPrime(17));
+    }
+
+    @Test
+    void compositeNumbers() {
+        assertFalse(PrimeUtil.isPrime(4));
+        assertFalse(PrimeUtil.isPrime(25));
+        assertFalse(PrimeUtil.isPrime(100));
+    }
+
+    @Test
+    void numbersLessThanTwo() {
+        assertFalse(PrimeUtil.isPrime(1));
+        assertFalse(PrimeUtil.isPrime(0));
+        assertFalse(PrimeUtil.isPrime(-7));
+    }
+}
+
+
+INPUT
+Number	Expected Output
+2	Prime
+3	Prime
+17	Prime
+4	Not Prime
+25	Not Prime
+0	Not Prime
+-7	Not Prime
+
+OUTPUT
+Tests run: 3
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases were executed successfully to identify prime and composite numbers using assertions.
