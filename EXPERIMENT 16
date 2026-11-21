@@ -1,0 +1,41 @@
+EXPERIMENT 16 – BASIC PERFORMANCE TESTING USING APACHE JMETER
+
+AIM
+To use Apache JMeter to execute a basic test plan using Thread Group, HTTP Request sampler and listeners.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 5, Ramp-up Period = 5 seconds and Loop Count = 2.
+4. Add an HTTP Request sampler and enter the website details.
+5. Add View Results Tree and Summary Report listeners.
+6. Save the plan as Exercise16.jmx and click Start.
+7. Verify that the number of samples is 10.
+TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	5
+Thread Group	Ramp-up Period	5 seconds
+Thread Group	Loop Count	2
+HTTP Request	Protocol	https
+HTTP Request	Server Name	the-internet.herokuapp.com
+HTTP Request	Method	GET
+HTTP Request	Path	/
+Listeners	Added	View Results Tree, Summary Report
+
+INPUT
+- Number of users: 5
+- Loop count: 2
+- Total samples: \(5 \times 2 = 10\)
+- Website: https://the-internet.herokuapp.com
+OUTPUT
+Summary Report
+Label	# Samples	Error %
+Home Page	10	0.00%
+TOTAL	10	0.00%
+
+View Results Tree:
+- All 10 samplers are green.
+- Response code: 200
+- Response message: OK
+Average, minimum, maximum, standard deviation and throughput depend on your network and system.
+RESULT
+Thus, Apache JMeter was used to execute a basic test plan using Thread Group, HTTP Request sampler and listeners, and the results were verified.
