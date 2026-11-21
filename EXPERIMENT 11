@@ -1,0 +1,54 @@
+EXPERIMENT 11 – SELENIUM WEBDRIVER: VERIFY PAGE TITLE AND URL
+
+AIM
+To write a Selenium WebDriver program to open the Chrome browser and verify the title and URL of a web page.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Create the ChromeDriver object and maximize the browser.
+3. Open the web page using driver.get().
+4. Read the page title using getTitle() and URL using getCurrentUrl().
+5. Compare the title with the expected title "Swag Labs" and display PASS or FAIL.
+6. Close the browser using driver.quit().
+CODE
+Exercise11.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise11 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+            driver.get("https://www.saucedemo.com");
+
+            String title = driver.getTitle();
+            String url = driver.getCurrentUrl();
+
+            System.out.println("Page title : " + title);
+            System.out.println("Current URL : " + url);
+
+            if (title.equals("Swag Labs") &&
+                url.contains("saucedemo")) {
+                System.out.println("Title verification : PASS");
+            } else {
+                System.out.println("Title verification : FAIL");
+            }
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+- Website URL: https://www.saucedemo.com
+- Expected title: Swag Labs
+OUTPUT
+Page title : Swag Labs
+Current URL : https://www.saucedemo.com/
+Title verification : PASS
+
+
+RESULT
+Thus, the Selenium WebDriver program to open Chrome and verify the title and URL of a web page was executed successfully.
