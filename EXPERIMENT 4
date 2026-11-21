@@ -1,0 +1,34 @@
+EXPERIMENT 4 – DEFECT CLASSIFICATION AND DEFECT REPOSITORY FOR LOAN APPLICATION
+
+AIM
+To classify loan application defects based on their type and phase of origin and maintain a defect repository.
+
+ALGORITHM
+1. Collect defects from requirements, design, coding and testing reports.
+2. Classify defects into requirements, design, coding and testing defects.
+3. Record defect ID, description, origin phase and severity.
+4. Count the defects in each category.
+5. Calculate the percentage of defects in each category.
+6. Prepare a defect prevention plan based on the findings.
+
+CODE
+This is a manual testing experiment. No programming code is required.
+
+INPUT
+Defect ID	Defect Description	Class
+LN-01	Maximum loan amount not specified	Requirements
+LN-03	Zero interest rate not handled	Design
+LN-05	EMI calculated using years instead of months	Coding
+LN-07	Wrong expected value in age-limit test	Testing
+
+OUTPUT
+Defect Class	Number of Defects
+Requirements	2
+Design	2
+Coding	2
+Testing	2
+Total	8
+
+Defect prevention: Requirement reviews, design walkthroughs, code inspections and unit testing should be performed.
+RESULT
+Thus, loan application defects were classified and recorded in a defect repository, and defect prevention actions were identified.
