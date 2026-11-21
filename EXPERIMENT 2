@@ -1,0 +1,36 @@
+EXPERIMENT 2 – EXPLORATORY TESTING ON INVENTORY MANAGEMENT SYSTEM
+
+AIM
+To perform exploratory testing on an inventory management system and identify and record software defects.
+
+ALGORITHM
+1. Open the inventory management system and explore its screens and features.
+2. Prepare test charters for each testing session.
+3. Test valid, invalid and unexpected inputs.
+4. Explore product addition, stock updates, search, deletion and reports.
+5. Record defects with reproduction steps and observations.
+6. Review the testing notes and prepare a defect summary.
+
+CODE
+This is a manual testing experiment. No programming code is required.
+
+INPUT
+Feature	Test Input
+Add product	Duplicate product code
+Product price	Negative value
+Stock update	Remove more stock than available
+Search	Special characters
+Delete product	Product used in an order
+Login	Wrong user role URL
+
+OUTPUT
+Test	Defect Identified
+Add product	Duplicate code accepted
+Product price	Negative price saved
+Stock update	Stock becomes negative
+Search	Special characters cause error
+Delete product	Ordered product can be deleted
+Login	Unauthorized role page opens
+
+RESULT
+Thus, exploratory testing was performed on the inventory management system, and defects were identified and documented using test charters.
