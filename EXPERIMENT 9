@@ -1,0 +1,65 @@
+EXPERIMENT 9 – EXCEPTION HANDLING USING JUNIT
+
+AIM
+To write JUnit test cases to test the exception handling of a division program using assertThrows().
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 dependency.
+2. Create a class named Calculator.
+3. Write the divide(int a, int b) method.
+4. Throw ArithmeticException when the divisor is zero.
+5. Create CalculatorTest and verify valid division using assertEquals().
+6. Use assertThrows() to test division by zero and verify the exception message.
+7. Run the tests using mvn test.
+CODE
+Calculator.java
+public class Calculator {
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        return a / b;
+    }
+}
+
+
+CalculatorTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+    private final Calculator calc = new Calculator();
+
+    @Test
+    void validDivision() {
+        assertEquals(5, calc.divide(10, 2));
+    }
+
+    @Test
+    void divisionByZeroThrowsException() {
+        ArithmeticException ex = assertThrows(
+            ArithmeticException.class,
+            () -> calc.divide(10, 0)
+        );
+        assertEquals("Cannot divide by zero", ex.getMessage());
+    }
+}
+
+
+INPUT
+Operation	Input
+Valid division	10 / 2
+Division by zero	10 / 0
+
+OUTPUT
+Running CalculatorTest
+
+Tests run: 2
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases for exception handling in a division program were executed successfully using assertThrows().
