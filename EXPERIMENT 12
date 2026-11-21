@@ -1,0 +1,80 @@
+EXPERIMENT 12 – LOCATING WEB ELEMENTS USING SELENIUM
+
+AIM
+To write a Selenium WebDriver program to locate web elements using ID, name, class name, CSS selector and XPath.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Open the login page of the demo website.
+3. Locate the username field using By.id(), password field using By.name() and logo using By.className().
+4. Locate the login button using By.cssSelector() and logo using By.xpath().
+5. Print the attributes or text of each element.
+6. Close the browser.
+CODE
+Exercise12.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise12 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+            driver.get("https://www.saucedemo.com");
+
+            WebElement byId =
+                driver.findElement(By.id("user-name"));
+
+            WebElement byName =
+                driver.findElement(By.name("password"));
+
+            WebElement byClass =
+                driver.findElement(By.className("login_logo"));
+
+            WebElement byCss =
+                driver.findElement(
+                    By.cssSelector("input[type='submit']")
+                );
+
+            WebElement byXpath =
+                driver.findElement(
+                    By.xpath("//div[@class='login_logo']")
+                );
+
+            System.out.println("By id : placeholder = "
+                + byId.getAttribute("placeholder"));
+
+            System.out.println("By name : placeholder = "
+                + byName.getAttribute("placeholder"));
+
+            System.out.println("By className : text = "
+                + byClass.getText());
+
+            System.out.println("By cssSelector : value = "
+                + byCss.getAttribute("value"));
+
+            System.out.println("By xpath : text = "
+                + byXpath.getText());
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+- Website: https://www.saucedemo.com
+- Username field: user-name
+- Password field: password
+- Logo class: login_logo
+OUTPUT
+By id          : placeholder = Username
+By name        : placeholder = Password
+By className   : text = Swag Labs
+By cssSelector : value = Login
+By xpath       : text = Swag Labs
+
+
+RESULT
+Thus, the Selenium WebDriver program to locate web elements using ID, name, class name, CSS selector and XPath was executed successfully.
