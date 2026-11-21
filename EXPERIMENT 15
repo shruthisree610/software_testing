@@ -1,0 +1,67 @@
+EXPERIMENT 15 – CAPTURING SCREENSHOT USING SELENIUM
+
+AIM
+To write a Selenium WebDriver program to capture a screenshot of a web page and store it in the local system.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Open the web page using driver.get().
+3. Use TakesScreenshot and getScreenshotAs() to capture the screenshot.
+4. Create a folder named screenshots.
+5. Copy the temporary screenshot as home_page.png using Files.copy().
+6. Print the saved file path.
+CODE
+Exercise15.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+public class Exercise15 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            driver.get("https://the-internet.herokuapp.com");
+
+            File source = ((TakesScreenshot) driver)
+                .getScreenshotAs(OutputType.FILE);
+
+            Path dest = Paths.get(
+                "screenshots", "home_page.png"
+            );
+
+            Files.createDirectories(dest.getParent());
+
+            Files.copy(
+                source.toPath(),
+                dest,
+                StandardCopyOption.REPLACE_EXISTING
+            );
+
+            System.out.println(
+                "Screenshot saved at : " + dest.toAbsolutePath()
+            );
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+- Website: https://the-internet.herokuapp.com
+- Screenshot filename: home_page.png
+- Folder name: screenshots
+OUTPUT
+Screenshot saved at :
+<project-folder>/screenshots/home_page.png
+
+
+RESULT
+Thus, the Selenium WebDriver program to capture a screenshot of a web page and store it in the local system was executed successfully.
