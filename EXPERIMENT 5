@@ -1,0 +1,81 @@
+EXPERIMENT 5 – FACTORIAL CALCULATION USING JUNIT
+
+AIM
+To write JUnit test cases to calculate the factorial of a number and validate the output using JUnit assertions.
+
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 dependency.
+2. Create a class named MathUtil.
+3. Write a factorial method using a loop.
+4. Create MathUtilTest to test factorial values.
+5. Use assertEquals() and assertThrows() to verify results.
+6. Run the test using mvn test.
+
+CODE
+MathUtil.java
+public class MathUtil {
+    public static long factorial(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative number");
+        }
+        long f = 1;
+        for (int i = 2; i <= n; i++) {
+            f *= i;
+        }
+        return f;
+    }
+}
+
+
+MathUtilTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MathUtilTest {
+    @Test
+    void factorialOfZero() {
+        assertEquals(1, MathUtil.factorial(0));
+    }
+
+    @Test
+    void factorialOfOne() {
+        assertEquals(1, MathUtil.factorial(1));
+    }
+
+    @Test
+    void factorialOfFive() {
+        assertEquals(120, MathUtil.factorial(5));
+    }
+
+    @Test
+    void factorialOfTen() {
+        assertEquals(3628800, MathUtil.factorial(10));
+    }
+
+    @Test
+    void negativeNumberThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> MathUtil.factorial(-3));
+    }
+}
+
+
+INPUT
+Input	Expected Output
+0	1
+1	1
+5	120
+10	3628800
+-3	Exception
+
+OUTPUT
+Tests run: 5
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases were executed successfully to calculate factorial values and validate the results using assertions.
