@@ -1,0 +1,52 @@
+EXPERIMENT 17 – DEFECT DETECTION USING RESPONSE ASSERTION IN APACHE JMETER
+
+AIM
+To use Apache JMeter to detect defects in a web page response using the Response Assertion.
+ALGORITHM
+1. Start Apache JMeter and create a Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 3, Ramp-up Period = 3 seconds and Loop Count = 1.
+4. Add two HTTP Request samplers for the path /login.
+5. Add a Response Assertion to the first sampler with pattern Login Page.
+6. Add a Response Assertion to the second sampler with pattern Dashboard.
+7. Add Assertion Results and Summary Report listeners.
+8. Run the plan and observe the results.
+TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	3
+Thread Group	Ramp-up Period	3 seconds
+Thread Group	Loop Count	1
+HTTP Request 1	Name	Login Page - correct text
+HTTP Request 1	Server Name	the-internet.herokuapp.com
+HTTP Request 1	Protocol / Method / Path	https / GET / /login
+Response Assertion 1	Field to Test	Text Response
+Response Assertion 1	Matching Rule	Contains
+Response Assertion 1	Pattern	Login Page
+HTTP Request 2	Name	Login Page - wrong text
+HTTP Request 2	Protocol / Method / Path	https / GET / /login
+Response Assertion 2	Field to Test	Text Response
+Response Assertion 2	Matching Rule	Contains
+Response Assertion 2	Pattern	Dashboard
+
+INPUT
+- Correct expected text: Login Page
+- Incorrect expected text: Dashboard
+- Number of users: 3
+- Loop count: 1
+OUTPUT
+Assertion Results
+Login Page - correct text : no failure message
+(assertion passed)
+
+Login Page - wrong text :
+Test failed: text expected to contain /Dashboard/
+
+
+Summary Report
+Label	Samples	Error %
+Login Page - correct text	3	0.00%
+Login Page - wrong text	3	100.00%
+TOTAL	6	50.00%
+
+RESULT
+Thus, Apache JMeter was used to detect defects in a web page response using the Response Assertion, and the results were verified.
