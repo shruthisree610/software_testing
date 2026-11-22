@@ -1,0 +1,87 @@
+EXPERIMENT 50 – COMPOUND INTEREST CALCULATION USING JUNIT PARAMETERIZED TESTS
+AIM
+To write JUnit test cases to calculate compound interest and validate the output using JUnit parameterized tests.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency.
+2. Create the CompoundInterest class with the formula:
+   
+   \[
+   CI=P(1+R/100)^N-P
+   \]
+3. Throw an exception if the principal is negative.
+4. Create CompoundInterestTest using @ParameterizedTest and @CsvSource.
+5. Provide principal, rate, years and expected interest values.
+6. Use assertEquals() with a delta of 0.01.
+7. Add a test for negative principal using assertThrows().
+8. Run using mvn test.
+CODE
+1. CompoundInterest.java
+public class CompoundInterest {
+    public static double interest(
+        double principal, double rate, int years) {
+
+        if (principal < 0) {
+            throw new IllegalArgumentException(
+                "Principal cannot be negative");
+        }
+
+        return principal *
+            Math.pow(1 + rate / 100, years) - principal;
+    }
+}
+
+
+2. CompoundInterestTest.java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CompoundInterestTest {
+
+    @ParameterizedTest(
+        name = "P={0}, R={1}%, N={2} -> CI={3}")
+    @CsvSource({
+        "1000,10,1,100.00",
+        "1000,10,2,210.00",
+        "5000,8,3,1298.56",
+        "2000,5,0,0.00"
+    })
+    void computesInterest(
+        double p, double r, int n, double expected) {
+
+        assertEquals(expected,
+            CompoundInterest.interest(p, r, n), 0.01);
+    }
+
+    @Test
+    void negativePrincipalThrows() {
+        assertThrows(IllegalArgumentException.class,
+            () -> CompoundInterest.interest(-1000, 10, 2));
+    }
+}
+
+
+INPUT
+Principal	Rate	Years	Expected Interest
+1000	10%	1	100.00
+1000	10%	2	210.00
+5000	8%	3	1298.56
+2000	5%	0	0.00
+-1000	10%	2	Exception
+
+OUTPUT
+$ mvn test
+
+Running CompoundInterestTest
+
+Tests run: 5
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases to calculate compound interest using parameterized tests were executed successfully, and the output was verified.
