@@ -1,0 +1,91 @@
+EXPERIMENT 26 – BOUNDARY VALUE ANALYSIS USING JUNIT
+AIM
+To write JUnit test cases to implement Boundary Value Analysis for a student grade evaluation system using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the GradeEvaluator class with the grade(int marks) method.
+3. Define grade ranges:
+   - A: 90–100
+   - B: 80–89
+   - C: 70–79
+   - D: 60–69
+   - E: 50–59
+   - F: 0–49
+4. Identify the lower boundary, upper boundary and values just outside each range.
+5. Write a @ParameterizedTest with @CsvSource for the 12 valid boundary values.
+6. Write another @ParameterizedTest with @ValueSource(ints = {-1, 101}) to test invalid marks using IllegalArgumentException.
+7. Run tests using mvn test and verify the output.
+CODE
+GradeEvaluator.java
+public class GradeEvaluator {
+    public static String grade(int marks) {
+        if (marks < 0 || marks > 100) {
+            throw new IllegalArgumentException(
+                "Marks must be between 0 and 100");
+        }
+        if (marks >= 90) return "A";
+        if (marks >= 80) return "B";
+        if (marks >= 70) return "C";
+        if (marks >= 60) return "D";
+        if (marks >= 50) return "E";
+        return "F";
+    }
+}
+
+
+GradeEvaluatorBVATest.java
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GradeEvaluatorBVATest {
+
+    @ParameterizedTest(name = "marks {0} -> grade {1}")
+    @CsvSource({
+        "0,F", "49,F", "50,E", "59,E",
+        "60,D", "69,D", "70,C", "79,C",
+        "80,B", "89,B", "90,A", "100,A"
+    })
+    void validBoundaryValues(int marks, String expected) {
+        assertEquals(expected, GradeEvaluator.grade(marks));
+    }
+
+    @ParameterizedTest(name = "invalid marks {0}")
+    @ValueSource(ints = {-1, 101})
+    void invalidBoundaryValues(int marks) {
+        assertThrows(IllegalArgumentException.class,
+            () -> GradeEvaluator.grade(marks));
+    }
+}
+
+
+INPUT
+Marks	Expected Grade
+0	F
+49	F
+50	E
+59	E
+60	D
+69	D
+70	C
+79	C
+80	B
+89	B
+90	A
+100	A
+-1	IllegalArgumentException
+101	IllegalArgumentException
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running GradeEvaluatorBVATest
+[INFO] Tests run: 14, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to implement Boundary Value Analysis for a student grade evaluation system using JUnit were executed successfully and the output was verified.
