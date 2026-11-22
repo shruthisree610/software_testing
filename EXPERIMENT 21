@@ -1,0 +1,48 @@
+EXPERIMENT 21 – EQUIVALENCE CLASS PARTITIONING (MANUAL TESTING)
+AIM
+To create test cases for a simple calculator application using Equivalence Class Partitioning.
+
+Equivalence Class Partitioning divides input data into classes in which all values are expected to behave in the same way.
+ALGORITHM
+1. List the calculator inputs: first number, second number and operation (+, -, *, /).
+2. Divide inputs into valid and invalid equivalence classes.
+3. Select one representative value from every class.
+4. Prepare test cases with test case ID, class, input and expected result.
+5. Number the classes as V1, V2 for valid and I1, I2 for invalid.
+6. Ensure every class is covered by at least one test case.
+7. Execute test cases, compare actual and expected results, and record status.
+INPUT CONDITIONS AND EQUIVALENCE CLASSES
+Input condition	Valid classes	Invalid classes
+First and second number	V1: Positive integer; V2: Negative integer; V3: Zero	I1: Non-numeric; I2: Blank; I3: Above 9999; I4: Below -9999; I5: Decimal
+Operation	V4: +, -, *, /	I6: No operation selected
+Divisor	V5: Non-zero number	I7: Zero
+
+
+TEST CASES
+TC ID	Input (A, B, Operation)	Expected result	Status
+TC01	5, 3, +	8	Pass
+TC02	-5, -3, +	-8	Pass
+TC03	5, -3, +	2	Pass
+TC04	0, 0, +	0	Pass
+TC05	20, 5, /	4	Pass
+TC06	20, 0, /	Cannot divide by zero	Pass
+TC07	abc, 5, +	Enter a valid number	Pass
+TC08	Blank, 5, +	Enter a valid number	Pass
+TC09	2.5, 1.5, *	3.75	Pass
+TC10	3, 5, -	-2	Pass
+TC11	5, 3, %	Invalid operation	Pass
+
+
+INPUT
+- Valid numbers: Positive, negative and zero
+- Invalid inputs: Non-numeric, blank and out-of-range values
+- Operations: +, -, *, /
+- Invalid operation: %
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+11	11	11	0	0	100%
+
+
+RESULT
+Thus, the test cases of the calculator application were created using Equivalence Class Partitioning and the output was verified. One value from every valid and invalid class was tested.
