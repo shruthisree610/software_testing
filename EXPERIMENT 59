@@ -1,0 +1,46 @@
+EXPERIMENT 59 – END-TO-END TICKET BOOKING TESTING USING APACHE JMETER
+AIM
+To use Apache JMeter to execute end-to-end testing of a ticket booking flow using the Transaction Controller.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Set Threads = 3, Ramp-up = 3 seconds and Loop Count = 1.
+4. Add HTTP Request Defaults and HTTP Cookie Manager.
+5. Add Logic Controller → Transaction Controller named Book_Flight.
+6. Select Generate parent sample.
+7. Add three HTTP Requests inside the controller:
+   - Home page (GET)
+   - Flight search (POST /reserve.php)
+   - Flight selection (POST /purchase.php)
+8. Add Response Assertions for all three requests.
+9. Add Summary Report and run the test.
+INPUT
+Test Plan Configuration
+Element	Property	Value
+Thread Group	Threads	3
+Thread Group	Ramp-up	3 seconds
+Thread Group	Loop Count	1
+HTTP Request Defaults	Protocol	https
+HTTP Request Defaults	Server	blazedemo.com
+Transaction Controller	Name	Book_Flight
+Transaction Controller	Generate parent sample	Selected
+HTTP Request 1	Method / Path	GET /index.php
+HTTP Request 2	Method / Path	POST /reserve.php
+HTTP Request 3	Method / Path	POST /purchase.php
+
+Parameters
+- Flight search: fromPort = Paris, toPort = Buenos Aires
+- Flight selection: flight = 43, price = 472.56, airline = Virgin America, fromPort = Paris, toPort = Buenos Aires
+Response Assertions:
+- Welcome to the Simple Travel Agency!
+- Choose This Flight
+- Purchase Flight
+OUTPUT
+Summary Report
+Label	Samples	Error %
+Book_Flight	3	0.00%
+TOTAL	3	0.00%
+
+Only the parent transaction is shown because Generate parent sample is selected.
+RESULT
+Thus, Apache JMeter was used to execute end-to-end testing of a ticket booking flow using the Transaction Controller, and the results were verified.
