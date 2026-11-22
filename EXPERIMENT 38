@@ -1,0 +1,45 @@
+EXPERIMENT 38 – CORRELATING DYNAMIC VALUES USING JSON EXTRACTOR IN APACHE JMETER
+AIM
+To use Apache JMeter to correlate dynamic values using the JSON Extractor.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group under Test Plan.
+3. Set Number of Threads = 3, Ramp-up Period = 3 seconds and Loop Count = 1.
+4. Add an HTTP Request with method GET and path /uuid to generate a random ID in the JSON response.
+5. Add Post Processors → JSON Extractor to the first sampler.
+6. Extract the value using JSON Path $.uuid into the variable uid.
+7. Add a second HTTP Request with path /anything/${uid}.
+8. Add a Response Assertion with pattern ${uid}.
+9. Add View Results Tree, run the plan and verify that the extracted ID is used in the second request.
+INPUT – TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	3
+Thread Group	Ramp-up Period	3 seconds
+Thread Group	Loop Count	1
+HTTP Request 1	Protocol / Server	https / httpbin.org
+HTTP Request 1	Method / Path	GET /uuid
+JSON Extractor	Variable Name	uid
+JSON Extractor	JSON Path	$.uuid
+JSON Extractor	Match No.	1
+JSON Extractor	Default Value	NOT_FOUND
+HTTP Request 2	Method / Path	GET /anything/$
+Response Assertion	Pattern	${uid}
+
+OUTPUT
+View Results Tree
+Request 1 : GET https://httpbin.org/uuid
+            -> {"uuid": "<random-id>"}
+
+Request 2 : GET https://httpbin.org/anything/<random-id>
+            -> Response code 200
+
+Response Assertion : Passed
+
+
+Summary Report
+Metric	Value
+Total Samples	6
+Error %	0.00%
+
+RESULT
+Thus, Apache JMeter was used to correlate dynamic values using the JSON Extractor and the results were verified.
