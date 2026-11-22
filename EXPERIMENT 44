@@ -1,0 +1,50 @@
+EXPERIMENT 44 – ACCEPTANCE TESTING FOR HOTEL RESERVATION SYSTEM
+AIM
+To execute acceptance testing for a hotel reservation system. Acceptance testing is done with the customer or user to decide whether the system satisfies the acceptance criteria and can be accepted.
+ALGORITHM
+1. Collect customer requirements and write acceptance criteria for every requirement.
+2. Prepare acceptance test cases. Alpha testing is performed by users at the developer's site, and beta testing by real users in their own environment.
+3. Execute acceptance test cases with users in the user acceptance environment.
+4. Record Accept or Reject for every criterion along with user comments.
+5. Agree on acceptance criteria and the pass rule with the customer before execution.
+6. Allow users to execute tests using their own data while recording their comments.
+7. Decide whether to accept the system and collect customer sign-off.
+INPUT
+Pre-requisites and Test Environment
+Item	Details
+System under test	Hotel reservation system
+Users	Hotel manager, receptionist and two guests
+Environment	User acceptance environment (copy of production setup)
+Basis	Acceptance criteria agreed with customer
+
+Acceptance Test Cases
+ID	Requirement	Acceptance Test	Expected Result	Status
+AC01	Search rooms	Search by check-in date, check-out date and guests	Available rooms and rates displayed	Accept
+AC02	Book a room	Select room and enter guest details	Booking confirmed with booking number	Accept
+AC03	Online payment	Pay advance using card	Payment receipt displayed	Accept
+AC04	Booking confirmation	Complete a booking	Confirmation email received within 5 minutes	Accept
+AC05	Modify booking	Change check-out date	New date and amount displayed	Accept
+AC06	Cancel booking	Cancel before cancellation limit	Booking cancelled and refund shown	Accept
+AC07	Reception view	Open today's arrivals list	Guest list displayed	Accept
+AC08	Generate bill	Check out a guest	Bill with room charge and tax printed	Accept
+AC09	Guest feedback	Submit feedback after check-out	Feedback saved	Accept
+AC10	Role-based access	Receptionist opens admin report	Access denied	Accept
+
+OUTPUT
+Alpha, Beta and User Acceptance Testing
+Type	Performed By	Place	Purpose
+Alpha test	Internal users or testers	Developer's site	Find defects before release
+Beta test	Selected real users	User's own site	Confirm fitness for use
+UAT	Customer representatives	Acceptance environment	Decide system acceptance
+
+User Acceptance Sign-off
+Item	Details
+Decision	Accepted
+Acceptance criteria	All 10 accepted
+User comments	All acceptance criteria are satisfied
+Suggestion	Show refund amount on cancellation page
+Accepted by	Hotel manager
+Date	15 Nov 2026
+
+RESULT
+Thus, acceptance testing of the hotel reservation system was executed against the customer's acceptance criteria, and the system was accepted.
