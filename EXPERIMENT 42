@@ -1,0 +1,45 @@
+EXPERIMENT 42 – REGRESSION TESTING FOR CONTENT MANAGEMENT SYSTEM
+AIM
+To implement regression testing for a content management system after updates. Regression testing confirms that new features, fixes or patches have not damaged previously working functions.
+ALGORITHM
+1. Start and identify the changes made in the CMS update.
+2. Select existing test cases covering the changed modules and dependent modules using impact analysis.
+3. Prioritize test cases as High, Medium or Low.
+4. Execute selected test cases on the updated system and compare results with the earlier version.
+5. Identify dependent modules and rate their regression risks.
+6. Execute high-priority test cases first and report differences as regression defects.
+7. Report failed test cases, retest after fixes and stop.
+INPUT
+Impact Analysis of the Update
+Changed Component	Impacted Modules	Risk
+New editor	Pages, media library, publishing	High
+Login security patch	Login, user roles, password reset	High
+Theme update	Front-end pages, menus	Medium
+SEO plug-in update	Page meta tags, sitemap	Medium
+Unchanged modules	Search, comments	Low
+
+Regression Test Suite
+TC ID	Module	Test Description	Priority	Status
+RG01	Login	Valid administrator login	High	Pass
+RG02	Login	Wrong password rejected	High	Pass
+RG03	Editor	Create page with text and image	High	Pass
+RG04	Editor	Save and reopen a page	High	Pass
+RG05	Media library	Upload and delete an image	Medium	Fail
+RG06	Publishing	Publish and unpublish a page	High	Pass
+RG07	User roles	Editor cannot delete a user	Medium	Pass
+RG08	Search	Search for a published page	Low	Pass
+RG09	Comments	Add and approve a comment	Medium	Fail
+RG10	Backup	Take backup and restore it	High	Pass
+
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+10	10	8	2	0	80%
+
+Regression Defect Log
+Defect ID	Test Case	Description	Severity	Status
+DEF-01	RG05	Image is not deleted from media library after Delete action	Major	Open
+DEF-02	RG09	Approved comment is displayed twice on the page	Minor	Open
+
+RESULT
+Thus, regression testing of the content management system was executed after the update. Changed modules and dependent modules were retested, and the results were verified.
