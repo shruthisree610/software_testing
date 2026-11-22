@@ -1,0 +1,47 @@
+EXPERIMENT 22 – BOUNDARY VALUE ANALYSIS (MANUAL TESTING)
+AIM
+To create test cases for a student grade evaluation system using Boundary Value Analysis (BVA).
+
+Boundary Value Analysis tests values at the edges of input ranges because defects occur more often at boundaries.
+ALGORITHM
+1. Study the grade rules: A (90–100), B (80–89), C (70–79), D (60–69), E (50–59), F (0–49).
+2. Identify the lower and upper boundaries of every grade range.
+3. Select values just below, on and just above each boundary.
+4. Prepare test cases with marks, boundary tested and expected result.
+5. Remove duplicate values and add invalid values -1 and 101.
+6. Execute the test cases and compare actual and expected grades.
+7. Record the test status.
+INPUT – GRADE BOUNDARIES
+Grade	Range	Min-1	Min	Min+1	Max-1	Max	Max+1
+F	0–49	-1	0	1	48	49	50
+E	50–59	49	50	51	58	59	60
+D	60–69	59	60	61	68	69	70
+C	70–79	69	70	71	78	79	80
+B	80–89	79	80	81	88	89	90
+A	90–100	89	90	91	99	100	101
+
+TEST CASES
+TC ID	Marks	Boundary Tested	Expected Result	Status
+TC01	-1	Below minimum	Invalid marks message	Pass
+TC02	0	Minimum	Grade F	Pass
+TC03	49	Upper boundary of F	Grade F	Pass
+TC04	50	Lower boundary of E	Grade E	Pass
+TC05	59	Upper boundary of E	Grade E	Pass
+TC06	60	Lower boundary of D	Grade D	Pass
+TC07	69	Upper boundary of D	Grade D	Pass
+TC08	70	Lower boundary of C	Grade C	Pass
+TC09	79	Upper boundary of C	Grade C	Pass
+TC10	80	Lower boundary of B	Grade B	Pass
+TC11	89	Upper boundary of B	Grade B	Pass
+TC12	90	Lower boundary of A	Grade A	Pass
+TC13	100	Maximum	Grade A	Pass
+TC14	101	Above maximum	Invalid marks message	Pass
+TC15	abc	Non-numeric value	Invalid marks message	Pass
+
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+15	15	15	0	0	100%
+
+RESULT
+Thus, the test cases of the student grade evaluation system were created using Boundary Value Analysis and the output was verified. Values on and around every boundary were tested.
