@@ -1,0 +1,137 @@
+EXPERIMENT 49 – JUNIT TEST LIFE CYCLE USING STACK IMPLEMENTATION
+AIM
+To write JUnit test cases to demonstrate the JUnit test life cycle using a stack implementation.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency.
+2. Create the IntStack class with push(), pop(), peek(), isEmpty() and size() methods.
+3. Create IntStackTest using @BeforeAll, @BeforeEach, @AfterEach and @AfterAll with print statements.
+4. Use @TestMethodOrder and @Order to arrange four tests: push, pop, peek and pop on an empty stack.
+5. Run using mvn test and observe the life cycle methods.
+CODE
+1. IntStack.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class IntStack {
+    private final List<Integer> data = new ArrayList<>();
+
+    public void push(int x) {
+        data.add(x);
+    }
+
+    public int pop() {
+        if (data.isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
+        }
+        return data.remove(data.size() - 1);
+    }
+
+    public int peek() {
+        if (data.isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
+        }
+        return data.get(data.size() - 1);
+    }
+
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
+
+    public int size() {
+        return data.size();
+    }
+}
+
+
+2. IntStackTest.java
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class IntStackTest {
+    private IntStack stack;
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("@BeforeAll : test class initialised");
+    }
+
+    @BeforeEach
+    void setUp() {
+        stack = new IntStack();
+        System.out.println(" @BeforeEach : new stack created");
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println(" @AfterEach : stack discarded");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("@AfterAll : all tests completed");
+    }
+
+    @Test
+    @Order(1)
+    void pushIncreasesSize() {
+        stack.push(10);
+        assertEquals(1, stack.size());
+    }
+
+    @Test
+    @Order(2)
+    void popReturnsLastPushedElement() {
+        stack.push(10);
+        stack.push(20);
+        assertEquals(20, stack.pop());
+    }
+
+    @Test
+    @Order(3)
+    void peekDoesNotRemoveElement() {
+        stack.push(5);
+        assertEquals(5, stack.peek());
+        assertEquals(1, stack.size());
+    }
+
+    @Test
+    @Order(4)
+    void popOnEmptyStackThrows() {
+        assertThrows(IllegalStateException.class,
+            () -> stack.pop());
+    }
+}
+
+
+INPUT
+Test Case	Input	Expected Output
+Push	Push 10	Stack size = 1
+Pop	Push 10, 20; pop	20
+Peek	Push 5; peek	5, size remains 1
+Pop empty stack	Empty stack; pop	IllegalStateException
+
+OUTPUT
+$ mvn test
+
+@BeforeAll : test class initialised
+@BeforeEach : new stack created
+@AfterEach : stack discarded
+@BeforeEach : new stack created
+@AfterEach : stack discarded
+@BeforeEach : new stack created
+@AfterEach : stack discarded
+@BeforeEach : new stack created
+@AfterEach : stack discarded
+@AfterAll : all tests completed
+
+Tests run: 4
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases demonstrating the JUnit test life cycle using a stack implementation were executed successfully, and the output was verified.
