@@ -1,0 +1,46 @@
+EXPERIMENT 24 – TEST DATA CREATION FOR TICKET BOOKING APPLICATION
+AIM
+To create test data for testing a ticket booking application using valid, invalid and boundary values for every input field.
+ALGORITHM
+1. List the booking form input fields: number of passengers, passenger age, travel date, travel class and payment mode.
+2. Identify valid and invalid values using equivalence class partitioning.
+3. Add boundary values for passengers (1–6), age (0–120) and travel date (within 120 days).
+4. Prepare a test data table with data ID, field, value, type and expected result.
+5. Specify the type, length, range and format of every field.
+6. Create valid, boundary and invalid test data.
+7. Execute the booking test cases and compare actual results with expected results.
+INPUT
+Field Specifications
+Field	Rule
+Passengers	1 to 6
+Passenger age	0 to 120
+Travel date	Today up to 120 days ahead
+Travel class	SL, 3A, 2A, 1A
+Mobile number	10 digits, starts with 6, 7, 8 or 9
+E-mail	Valid format with one @ and a domain
+Payment mode	Card, UPI or Net banking
+
+Test Data
+Data ID	Field	Test Data	Type	Expected Result
+TD01	Passengers	0	Invalid	Minimum 1 passenger
+TD02	Passengers	1	Valid	Booking page displayed
+TD03	Passengers	6	Valid	Booking page displayed
+TD04	Passengers	7	Invalid	Maximum 6 passengers
+TD05	Passenger age	4	Valid	Fare = 0
+TD06	Passenger age	-1	Invalid	Enter a valid age
+TD07	Travel date	Yesterday	Invalid	Date cannot be in the past
+TD08	Travel date	Today + 120 days	Valid	Seats displayed
+TD09	Travel date	Today + 121 days	Invalid	Booking is not open
+TD10	Travel class	SL / AC	Valid	Fare of the class displayed
+TD11	Payment mode	Card / UPI / Net banking	Valid	Payment page displayed
+TD12	Payment mode	None selected	Invalid	Select the payment mode
+TD13	Passenger age	120	Valid	Booking page displayed
+TD14	Passenger age	121	Invalid	Enter a valid age
+
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+14	14	14	0	0	100%
+
+RESULT
+Thus, the test data of the ticket booking application was created using equivalence classes and boundary values, and the output was verified. Valid, invalid and boundary values were prepared for every field.
