@@ -1,0 +1,93 @@
+EXPERIMENT 29 – PATH COVERAGE TESTING USING JUNIT
+AIM
+To write JUnit test cases to execute path coverage testing on a payroll calculation program using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the Payroll class with the netSalary(basic, overtimeHours) method.
+3. Include three decisions: overtime greater than 0, gross salary greater than 50,000 and gross salary greater than 25,000.
+4. Calculate cyclomatic complexity:
+   
+   \[
+   V(G) = \text{Number of decisions} + 1 = 3+1=4
+   \]
+5. Identify four independent paths:
+   - P1: No overtime, no tax.
+   - P2: Overtime, no tax.
+   - P3: 10% tax.
+   - P4: 20% tax.
+6. Write one JUnit test for each path using assertEquals() with a delta value.
+7. Run tests using mvn test and verify all four paths.
+CODE
+Payroll.java
+public class Payroll {
+    public static double netSalary(double basic, int overtimeHours) {
+        double gross = basic;
+
+        if (overtimeHours > 0) {
+            gross += overtimeHours * 200;
+        }
+
+        double tax;
+
+        if (gross > 50000) {
+            tax = gross * 0.20;
+        } else if (gross > 25000) {
+            tax = gross * 0.10;
+        } else {
+            tax = 0;
+        }
+
+        return gross - tax;
+    }
+}
+
+
+PayrollPathTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class PayrollPathTest {
+
+    private static final double DELTA = 0.01;
+
+    @Test
+    void path1_noOvertime_noTax() {
+        assertEquals(20000, Payroll.netSalary(20000, 0), DELTA);
+    }
+
+    @Test
+    void path2_overtime_noTax() {
+        assertEquals(22000, Payroll.netSalary(20000, 10), DELTA);
+    }
+
+    @Test
+    void path3_tenPercentTax() {
+        assertEquals(27000, Payroll.netSalary(30000, 0), DELTA);
+    }
+
+    @Test
+    void path4_twentyPercentTax() {
+        assertEquals(48000, Payroll.netSalary(60000, 0), DELTA);
+    }
+}
+
+
+INPUT
+Path	Basic Salary	Overtime Hours	Expected Net Salary
+P1	20,000	0	20,000
+P2	20,000	10	22,000
+P3	30,000	0	27,000
+P4	60,000	0	48,000
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running PayrollPathTest
+[INFO] Tests run: 4, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to execute path coverage testing on a payroll calculation program using JUnit were executed successfully and the output was verified.
