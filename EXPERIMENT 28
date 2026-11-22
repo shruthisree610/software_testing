@@ -1,0 +1,100 @@
+EXPERIMENT 28 – WHITE-BOX TESTING USING STATEMENT COVERAGE (JUNIT)
+AIM
+To write JUnit test cases to implement white-box testing using statement coverage on a number sorting program using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the SortUtil class with the bubbleSort(int[] a) method.
+3. Identify the statements: null check, outer loop, inner loop, comparison and three swap statements.
+4. Write tests for an unsorted array, sorted array, single-element array, empty array and null array.
+5. Run tests using the IDE's Run with Coverage option and verify that every statement of bubbleSort() is executed.
+6. Stop.
+CODE
+SortUtil.java
+public class SortUtil {
+    public static int[] bubbleSort(int[] a) {
+        if (a == null) {
+            throw new IllegalArgumentException("Array is null");
+        }
+
+        int n = a.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (a[j] > a[j + 1]) {
+                    int temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+        return a;
+    }
+}
+
+
+SortUtilTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SortUtilTest {
+
+    @Test
+    void sortsUnsortedArray() {
+        assertArrayEquals(
+            new int[]{1, 2, 5, 9},
+            SortUtil.bubbleSort(new int[]{5, 2, 9, 1})
+        );
+    }
+
+    @Test
+    void keepsSortedArrayUnchanged() {
+        assertArrayEquals(
+            new int[]{1, 2, 3},
+            SortUtil.bubbleSort(new int[]{1, 2, 3})
+        );
+    }
+
+    @Test
+    void singleElementArray() {
+        assertArrayEquals(
+            new int[]{7},
+            SortUtil.bubbleSort(new int[]{7})
+        );
+    }
+
+    @Test
+    void emptyArray() {
+        assertArrayEquals(
+            new int[]{},
+            SortUtil.bubbleSort(new int[]{})
+        );
+    }
+
+    @Test
+    void nullArrayThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+            () -> SortUtil.bubbleSort(null));
+    }
+}
+
+
+INPUT
+Test Case	Input Array	Expected Output
+Unsorted array	{5, 2, 9, 1}	{1, 2, 5, 9}
+Sorted array	{1, 2, 3}	{1, 2, 3}
+Single element	{7}	{7}
+Empty array	{}	{}
+Null array	null	IllegalArgumentException
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running SortUtilTest
+[INFO] Tests run: 5, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to implement white-box testing using statement coverage on a number sorting program using JUnit were executed successfully and the output was verified.
