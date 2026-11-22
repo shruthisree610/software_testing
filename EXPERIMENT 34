@@ -1,0 +1,76 @@
+EXPERIMENT 34 – BOUNDARY VALUE TESTING OF NUMERIC INPUT FIELD USING SELENIUM
+AIM
+To write a Selenium WebDriver program to test the boundary values of a numeric input field.
+ALGORITHM
+1. Create a Maven project and add the selenium-java (Selenium 4) dependency to pom.xml.
+2. Selenium Manager downloads the browser driver automatically.
+3. Create an HTML number field with a valid range of 18 to 60 using JavascriptExecutor on an about:blank page.
+4. Identify the boundary values: 17, 18, 19, 59, 60 and 61.
+5. For every value:
+   - Clear the field.
+   - Enter the value using sendKeys().
+   - Call the HTML5 checkValidity() method using JavascriptExecutor.
+6. Print the validity of every value and verify the results.
+7. Close the browser and stop.
+CODE
+Exercise34.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise34 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            driver.get("about:blank");
+
+            js.executeScript(
+                "document.body.innerHTML = " +
+                "\"<input id='age' type='number' min='18' max='60'>\";"
+            );
+
+            int[] values = {17, 18, 19, 59, 60, 61};
+
+            for (int v : values) {
+                WebElement age = driver.findElement(By.id("age"));
+
+                age.clear();
+                age.sendKeys(String.valueOf(v));
+
+                Boolean valid = (Boolean) js.executeScript(
+                    "return arguments[0].checkValidity();", age
+                );
+
+                System.out.println("Age " + v + " -> valid = " + valid);
+            }
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+Age	Expected Validity
+17	false
+18	true
+19	true
+59	true
+60	true
+61	false
+
+OUTPUT
+Age 17 -> valid = false
+Age 18 -> valid = true
+Age 19 -> valid = true
+Age 59 -> valid = true
+Age 60 -> valid = true
+Age 61 -> valid = false
+
+
+RESULT
+Thus, the Selenium WebDriver program to test the boundary values of a numeric input field was executed successfully and the output was verified.
