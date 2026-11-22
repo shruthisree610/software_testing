@@ -1,0 +1,45 @@
+EXPERIMENT 57 – LOAD TESTING FOR WEB-BASED EXAM SYSTEM USING APACHE JMETER
+AIM
+To use Apache JMeter to implement load testing for a web-based exam system.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Add HTTP Request Defaults and HTTP Cookie Manager.
+4. Set:
+   - Number of Threads: 50
+   - Ramp-up Period: 25 seconds
+   - Loop Count: 1
+5. Add three HTTP Requests:
+   - Student Login (POST)
+   - Download Questions (GET)
+   - Submit Answers (POST)
+6. Add Response Assertion for status code 200.
+7. Add Duration Assertion of 5000 milliseconds.
+8. Add Summary Report and Aggregate Report.
+9. Run the test and compare the 90% Line and Error % with acceptance criteria.
+INPUT
+Test Plan Configuration
+Element	Property	Value
+HTTP Request Defaults	Protocol	http
+HTTP Request Defaults	Server	localhost
+HTTP Request Defaults	Port	8080
+Thread Group	Threads	50
+Thread Group	Ramp-up	25 seconds
+Thread Group	Loop Count	1
+HTTP Request 1	Method / Path	POST /exam/login
+HTTP Request 2	Method / Path	GET /exam/questions?paper=CSA37
+HTTP Request 3	Method / Path	POST /exam/submit
+Response Assertion	Response Code	200
+Duration Assertion	Duration	5000 ms
+
+OUTPUT
+Aggregate Report
+Label	Samples	Average	90% Line	Error %
+Student Login	50	<ms>	<ms>	0.00%
+Get Questions	50	<ms>	<ms>	0.00%
+Submit Answers	50	<ms>	<ms>	0.00%
+TOTAL	150	<ms>	<ms>	0.00%
+
+Acceptance criteria: Error % = 0 and 90% Line less than 5 seconds. Actual response times depend on the exam system.
+RESULT
+Thus, Apache JMeter was used to implement load testing for a web-based exam system, and the results were verified.
