@@ -1,0 +1,74 @@
+EXPERIMENT 27 – VOTING ELIGIBILITY USING BOUNDARY VALUE ANALYSIS (JUNIT)
+AIM
+To write JUnit test cases to validate voting eligibility based on age using Boundary Value Analysis in JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the VoteChecker class with the isEligible(int age) method.
+3. Return true for age 18 or more and throw IllegalArgumentException for age below 0 or above 120.
+4. Identify boundary values: -1, 0, 17, 18, 19, 120 and 121.
+5. Write a @ParameterizedTest with @CsvSource for valid boundary values and verify using assertEquals().
+6. Write another @ParameterizedTest with @ValueSource for invalid ages -1 and 121 using assertThrows().
+7. Run tests using mvn test and verify the output.
+CODE
+VoteChecker.java
+public class VoteChecker {
+    public static boolean isEligible(int age) {
+        if (age < 0 || age > 120) {
+            throw new IllegalArgumentException("Invalid age");
+        }
+        return age >= 18;
+    }
+}
+
+
+VoteCheckerTest.java
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class VoteCheckerTest {
+
+    @ParameterizedTest(name = "age {0} -> eligible {1}")
+    @CsvSource({
+        "0,false",
+        "17,false",
+        "18,true",
+        "19,true",
+        "120,true"
+    })
+    void validAges(int age, boolean expected) {
+        assertEquals(expected, VoteChecker.isEligible(age));
+    }
+
+    @ParameterizedTest(name = "invalid age {0}")
+    @ValueSource(ints = {-1, 121})
+    void invalidAges(int age) {
+        assertThrows(IllegalArgumentException.class,
+            () -> VoteChecker.isEligible(age));
+    }
+}
+
+
+INPUT
+Age	Expected Result
+0	Not eligible
+17	Not eligible
+18	Eligible
+19	Eligible
+120	Eligible
+-1	IllegalArgumentException
+121	IllegalArgumentException
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running VoteCheckerTest
+[INFO] Tests run: 7, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to validate voting eligibility based on age using Boundary Value Analysis in JUnit were executed successfully and the output was verified.
