@@ -1,0 +1,38 @@
+EXPERIMENT 40 – API TESTING USING APACHE JMETER
+AIM
+To use Apache JMeter to create test cases for API testing and verify the status codes and the response data.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 5, Ramp-up Period = 5 seconds and Loop Count = 1.
+4. Add HTTP Request Defaults for the API server.
+5. Test Case 1: GET /posts/1 with Response Assertion for status code 200 and JSON Assertion for $.id = 1.
+6. Test Case 2: GET /posts/9999 with Response Assertion for status code 404. Select Ignore Status.
+7. Test Case 3: GET /posts?userId=1 with JSON Assertion for $[0].userId = 1.
+8. Add View Results Tree and Summary Report.
+9. Run the plan and verify the status codes and response data.
+INPUT – TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	5
+Thread Group	Ramp-up Period	5 seconds
+Thread Group	Loop Count	1
+HTTP Request Defaults	Protocol / Server	https / jsonplaceholder.typicode.com
+TC1	Request	GET /posts/1
+TC1	Response Assertion	Response Code = 200
+TC1	JSON Assertion	$.id = 1
+TC2	Request	GET /posts/9999
+TC2	Response Assertion	Response Code = 404
+TC2	Ignore Status	Selected
+TC3	Request	GET /posts?userId=1
+TC3	JSON Assertion	$[0].userId = 1
+
+OUTPUT
+Summary Report
+Label	Samples	Error %
+TC1: GET /posts/1	5	0.00%
+TC2: GET /posts/9999	5	0.00%
+TC3: GET /posts?userId=1	5	0.00%
+TOTAL	15	0.00%
+
+RESULT
+Thus, Apache JMeter was used to create test cases for API testing and verify the status codes and response data.
