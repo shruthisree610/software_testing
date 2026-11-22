@@ -1,0 +1,70 @@
+EXPERIMENT 33 – DROPDOWN SELECTION USING SELENIUM
+AIM
+To write a Selenium WebDriver program to automate dropdown selection using the Select class.
+ALGORITHM
+1. Create a Maven project and add the selenium-java (Selenium 4) dependency to pom.xml.
+2. Selenium Manager downloads the browser driver automatically.
+3. Open the dropdown page and locate the dropdown using By.id("dropdown").
+4. Wrap the element in a Select object.
+5. Select options using:
+   - selectByVisibleText()
+   - selectByValue()
+   - selectByIndex()
+6. After every selection, print the selected option using getFirstSelectedOption() and print the total number of options.
+7. Close the browser and stop.
+CODE
+Exercise33.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class Exercise33 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            driver.get("https://the-internet.herokuapp.com/dropdown");
+
+            Select dropdown = new Select(
+                driver.findElement(By.id("dropdown"))
+            );
+
+            dropdown.selectByVisibleText("Option 1");
+            System.out.println("By visible text : " +
+                dropdown.getFirstSelectedOption().getText());
+
+            dropdown.selectByValue("2");
+            System.out.println("By value        : " +
+                dropdown.getFirstSelectedOption().getText());
+
+            dropdown.selectByIndex(1);
+            System.out.println("By index        : " +
+                dropdown.getFirstSelectedOption().getText());
+
+            System.out.println("Total options   : " +
+                dropdown.getOptions().size());
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+Selection Method	Input
+selectByVisibleText()	Option 1
+selectByValue()	2
+selectByIndex()	1
+
+OUTPUT
+By visible text : Option 1
+By value        : Option 2
+By index        : Option 1
+Total options   : 3
+
+
+RESULT
+Thus, the Selenium WebDriver program to automate dropdown selection using the Select class was executed successfully and the output was verified.
