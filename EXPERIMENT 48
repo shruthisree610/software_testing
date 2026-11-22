@@ -1,0 +1,130 @@
+EXPERIMENT 48 – REGRESSION TEST SUITE USING TAGS AND TEST SUITES IN JUNIT
+AIM
+To write JUnit test cases to create a regression test suite using tags and test suites in JUnit.
+ALGORITHM
+1. Create a Maven project and add junit-jupiter and junit-platform-suite dependencies.
+2. Create the CartService class with addItem(), removeItem(), total() and totalWithDiscount() methods.
+3. Create CartTest and mark tests using @Tag("smoke") and @Tag("regression").
+4. Create RegressionSuiteTest using @Suite, @SelectClasses and @IncludeTags("regression").
+5. Run using mvn test -Dtest=RegressionSuiteTest.
+6. Verify that only four regression tests are executed.
+CODE
+1. CartService.java
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class CartService {
+    private final Map<String, Double> items =
+        new LinkedHashMap<>();
+
+    public void addItem(String name, double price) {
+        items.put(name, price);
+    }
+
+    public boolean removeItem(String name) {
+        return items.remove(name) != null;
+    }
+
+    public int size() {
+        return items.size();
+    }
+
+    public double total() {
+        return items.values().stream()
+            .mapToDouble(Double::doubleValue).sum();
+    }
+
+    public double totalWithDiscount(double percent) {
+        return total() * (100 - percent) / 100;
+    }
+}
+
+
+2. CartTest.java
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CartTest {
+
+    @Test
+    @Tag("smoke")
+    @Tag("regression")
+    void addItemIncreasesSize() {
+        CartService cart = new CartService();
+        cart.addItem("Pen", 10);
+        assertEquals(1, cart.size());
+    }
+
+    @Test
+    @Tag("regression")
+    void removeItemWorks() {
+        CartService cart = new CartService();
+        cart.addItem("Pen", 10);
+        assertTrue(cart.removeItem("Pen"));
+        assertEquals(0, cart.size());
+    }
+
+    @Test
+    @Tag("regression")
+    void totalOfTwoItems() {
+        CartService cart = new CartService();
+        cart.addItem("Pen", 100);
+        cart.addItem("Book", 250);
+        assertEquals(350, cart.total(), 0.001);
+    }
+
+    @Test
+    @Tag("smoke")
+    void emptyCartTotalIsZero() {
+        assertEquals(0,
+            new CartService().total(), 0.001);
+    }
+
+    @Test
+    @Tag("regression")
+    void discountIsApplied() {
+        CartService cart = new CartService();
+        cart.addItem("Pen", 100);
+        cart.addItem("Book", 250);
+        assertEquals(315,
+            cart.totalWithDiscount(10), 0.001);
+    }
+}
+
+
+3. RegressionSuiteTest.java
+import org.junit.platform.suite.api.IncludeTags;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@SelectClasses(CartTest.class)
+@IncludeTags("regression")
+public class RegressionSuiteTest {
+}
+
+
+INPUT
+Test Case	Input	Expected Output
+Add item	Pen, 10	Size = 1
+Remove item	Pen	Size = 0
+Total of two items	100 + 250	350
+Empty cart	No items	0
+Apply discount	10% on 350	315
+
+OUTPUT
+$ mvn test -Dtest=RegressionSuiteTest
+
+Running RegressionSuiteTest
+
+Tests run: 4
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases were executed successfully to create a regression test suite using tags and test suites, and the output was verified.
