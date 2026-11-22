@@ -1,0 +1,40 @@
+EXPERIMENT 41 – SMOKE TESTING ON A MESSAGING APPLICATION
+AIM
+To execute smoke testing on a new version of a messaging application. Smoke testing is a quick and shallow check of the critical functions of a new build to decide whether it is stable enough for detailed testing.
+ALGORITHM
+1. Install the new build of the messaging application on the test device.
+2. Prepare a checklist covering only the critical functions. Keep it short enough to execute within 15–30 minutes.
+3. Execute the checklist in the given order.
+4. If any critical function fails, stop testing.
+5. If all checks pass, accept the build for detailed testing. Otherwise, reject it and report the failed checks to developers.
+6. Record the build number and check the network connection before testing.
+7. Record the final decision and stop.
+INPUT
+Pre-requisites and Test Environment
+Item	Details
+Build under test	New messaging application build
+Devices	One Android and one iOS device
+Accounts	Two test accounts
+Time limit	30 minutes
+Rule	If any critical check fails, reject the build and stop testing
+
+Smoke Test Checklist
+TC ID	Critical Function	Test
+SM01	Install and launch	Install and open application
+SM02	Login	Login using mobile number and OTP
+SM03	Send text	Send a text message
+SM04	Receive text	Receive a message from another device
+SM05	Send image	Send an image from gallery
+SM06	Create group	Create group with two members
+SM07	Notification	Receive message while app is in background
+SM08	Logout	Logout from application
+SM09	Delete a message	Delete a sent message
+SM10	Upgrade	Install new build over old build
+
+OUTPUT
+All 10 test cases passed.
+Build Number	Date	Checks Passed	Checks Failed	Decision
+Build 2.5.0	10 Nov 2026	10	0	Accepted for detailed testing
+
+RESULT
+Thus, smoke testing of the new version of the messaging application was executed. All critical functions passed, and the build was accepted for detailed testing.
