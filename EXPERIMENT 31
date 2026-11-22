@@ -1,0 +1,86 @@
+EXPERIMENT 31 – BLACK-BOX TESTING ON LOGIN PAGE USING SELENIUM
+AIM
+To write a Selenium WebDriver program to execute black-box testing on a login page.
+ALGORITHM
+1. Create a Maven project and add the selenium-java (Selenium 4) dependency to pom.xml.
+2. Selenium Manager downloads the browser driver automatically.
+3. Prepare four black-box test cases: valid login, wrong password, blank username and blank password.
+4. Store test cases in a two-dimensional array containing username, password and expected result.
+5. For every test case:
+   - Delete all cookies.
+   - Open the login page.
+   - Enter username and password.
+   - Click the Login button.
+6. Compare the actual result (URL or error message) with the expected result and display PASS or FAIL.
+7. Close the browser and stop.
+CODE
+Exercise31.java
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise31 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            String[][] cases = {
+                {"standard_user", "secret_sauce", "inventory"},
+                {"standard_user", "wrong_pass",
+                 "Epic sadface: Username and password do not match any user in this service"},
+                {"", "secret_sauce",
+                 "Epic sadface: Username is required"},
+                {"standard_user", "",
+                 "Epic sadface: Password is required"}
+            };
+
+            int tc = 1;
+
+            for (String[] c : cases) {
+                driver.manage().deleteAllCookies();
+                driver.get("https://www.saucedemo.com");
+
+                driver.findElement(By.id("user-name")).sendKeys(c[0]);
+                driver.findElement(By.id("password")).sendKeys(c[1]);
+                driver.findElement(By.id("login-button")).click();
+
+                String actual;
+
+                if (c[2].equals("inventory")) {
+                    actual = driver.getCurrentUrl().contains("inventory")
+                        ? "inventory" : "login failed";
+                } else {
+                    actual = driver.findElement(
+                        By.cssSelector("[data-test='error']")
+                    ).getText();
+                }
+
+                System.out.println("TC" + tc + " : " +
+                    (actual.equals(c[2]) ? "PASS" : "FAIL"));
+
+                tc++;
+            }
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+Test Case	Username	Password	Expected Result
+TC1	standard_user	secret_sauce	Inventory page
+TC2	standard_user	wrong_pass	Invalid credentials error
+TC3	Blank	secret_sauce	Username is required
+TC4	standard_user	Blank	Password is required
+
+OUTPUT
+TC1 : PASS
+TC2 : PASS
+TC3 : PASS
+TC4 : PASS
+
+
+RESULT
+Thus, the Selenium WebDriver program to execute black-box testing on a login page was executed successfully and the output was verified.
