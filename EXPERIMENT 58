@@ -1,0 +1,42 @@
+EXPERIMENT 58 – SESSION MANAGEMENT AND COOKIE HANDLING USING APACHE JMETER
+AIM
+To use Apache JMeter to test session management and cookie handling using the HTTP Cookie Manager.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Set Threads = 3, Ramp-up = 3 seconds and Loop Count = 1.
+4. Add HTTP Cookie Manager.
+5. Add HTTP Request POST /authenticate with valid login details and select Follow Redirects.
+6. Add HTTP Request GET /secure.
+7. Add Response Assertion to the second request with pattern Welcome to the Secure Area.
+8. Run the test with Cookie Manager enabled.
+9. Disable Cookie Manager and run again.
+10. Compare both results to understand session handling.
+INPUT
+Element	Property	Value
+Thread Group	Threads	3
+Thread Group	Ramp-up	3 seconds
+Thread Group	Loop Count	1
+HTTP Cookie Manager	Run 1	Enabled
+HTTP Cookie Manager	Run 2	Disabled
+HTTP Request 1	Server	the-internet.herokuapp.com
+HTTP Request 1	Method / Path	POST /authenticate
+Parameters	Username	tomsmith
+Parameters	Password	SuperSecretPassword!
+HTTP Request 2	Method / Path	GET /secure
+Response Assertion	Pattern	Welcome to the Secure Area
+
+OUTPUT
+Run 1 – Cookie Manager Enabled
+Label	Samples	Error %
+POST /authenticate	3	0.00%
+GET /secure	3	0.00%
+
+Run 2 – Cookie Manager Disabled
+Label	Samples	Error %
+POST /authenticate	3	0.00%
+GET /secure	3	100.00%
+
+Without the Cookie Manager, the session is lost and the login page is returned.
+RESULT
+Thus, Apache JMeter was used to test session management and cookie handling using the HTTP Cookie Manager, and the results were verified.
