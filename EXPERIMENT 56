@@ -1,0 +1,50 @@
+EXPERIMENT 56 – PERFORMANCE TESTING ON STUDENT PORTAL USING APACHE JMETER
+AIM
+To use Apache JMeter to execute performance testing on a student portal.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Add User Defined Variables for host and port.
+4. Add HTTP Request Defaults and HTTP Cookie Manager.
+5. Set:
+   - Number of Threads: 20
+   - Ramp-up Period: 10 seconds
+   - Loop Count: 2
+6. Add four HTTP Requests: Login Page, Login, Dashboard and Results.
+7. Add a Duration Assertion of 3000 milliseconds.
+8. Add Summary Report and Aggregate Report.
+9. Run the test and analyse average response time, throughput and error percentage.
+INPUT
+Test Plan Configuration
+Element	Property	Value
+User Defined Variables	host	localhost
+User Defined Variables	port	8080
+HTTP Request Defaults	Protocol	http
+HTTP Request Defaults	Server	${host}
+HTTP Request Defaults	Port	${port}
+Thread Group	Threads	20
+Thread Group	Ramp-up	10 seconds
+Thread Group	Loop Count	2
+HTTP Request 1	GET	/login
+HTTP Request 2	POST	/login
+HTTP Request 3	GET	/dashboard
+HTTP Request 4	GET	/results
+Duration Assertion	Duration	3000 ms
+
+Login POST parameters:
+- regno = test registration number
+- password = test password
+OUTPUT
+Aggregate Report
+Label	Samples	Error %
+Login Page	40	0.00%
+Login	40	0.00%
+Dashboard	40	0.00%
+Results	40	0.00%
+TOTAL	160	0.00%
+
+Average, 90% Line, 95% Line and Throughput depend on the student portal.
+RESULT
+Thus, Apache JMeter was used to execute performance testing on a student portal, and the results were verified.
+
+Note: Execute load, stress and soak tests only against your college test server or a local application copy. Do not run them against websites you do not own.
