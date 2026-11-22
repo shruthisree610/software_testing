@@ -1,0 +1,77 @@
+EXPERIMENT 53 – SMOKE TESTING OF CRITICAL WEBSITE PAGES USING SELENIUM
+AIM
+To write a Selenium WebDriver program to execute smoke testing of the critical pages of a website.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Prepare a list of critical pages and their expected headings.
+3. Open every page using a loop.
+4. Read the first heading using the CSS selector h1, h2, h3.
+5. Compare the actual heading with the expected heading.
+6. Display PASS or FAIL for every page.
+7. Display the number of pages passed. If any page fails, the build is not accepted for detailed testing.
+8. Close the browser.
+CODE
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exercise53 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            String base = "https://the-internet.herokuapp.com";
+
+            String[][] pages = {
+                {"/", "Welcome to the-internet"},
+                {"/login", "Login Page"},
+                {"/checkboxes", "Checkboxes"},
+                {"/dropdown", "Dropdown List"}
+            };
+
+            int passed = 0;
+
+            for (String[] p : pages) {
+                driver.get(base + p[0]);
+
+                String heading = driver.findElement(
+                    By.cssSelector("h1, h2, h3")).getText();
+
+                boolean ok = heading.equals(p[1]);
+
+                if (ok) passed++;
+
+                System.out.println("Smoke " + p[0] + " -> "
+                    + heading + " -> " + (ok ? "PASS" : "FAIL"));
+            }
+
+            System.out.println("Smoke test result : "
+                + passed + "/" + pages.length + " passed");
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+Page	Expected heading
+/	Welcome to the-internet
+/login	Login Page
+/checkboxes	Checkboxes
+/dropdown	Dropdown List
+
+Base URL: https://the-internet.herokuapp.com
+OUTPUT
+Smoke / -> Welcome to the-internet -> PASS
+Smoke /login -> Login Page -> PASS
+Smoke /checkboxes -> Checkboxes -> PASS
+Smoke /dropdown -> Dropdown List -> PASS
+
+Smoke test result : 4/4 passed
+
+
+RESULT
+Thus, the Selenium WebDriver program to execute smoke testing of critical website pages was executed successfully, and the output was verified.
