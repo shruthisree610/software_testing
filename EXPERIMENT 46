@@ -1,0 +1,100 @@
+EXPERIMENT 46 – UNIT TESTING USING STUB AND DRIVER WITH JUNIT
+AIM
+To write JUnit test cases to design a test harness using a stub and a driver to unit test a fare calculation module.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency.
+2. Write the DistanceService interface to return the distance in kilometres between two stops.
+3. Replace the real implementation with a stub.
+4. Create the FareCalculator class using the formula:
+   
+   Fare = 50 + 12 × Distance (km)
+5. Create FareCalculatorTest as the driver.
+6. Create stubs using lambda expressions that return fixed distances 10, 0 and -5.
+7. Verify using assertEquals() and assertThrows().
+8. Run tests using mvn test.
+CODE
+1. DistanceService.java
+public interface DistanceService {
+    int getDistanceKm(String from, String to);
+}
+
+
+2. FareCalculator.java
+public class FareCalculator {
+    private static final int BASE_FARE = 50;
+    private static final int RATE_PER_KM = 12;
+
+    private final DistanceService distanceService;
+
+    public FareCalculator(DistanceService distanceService) {
+        this.distanceService = distanceService;
+    }
+
+    public int fare(String from, String to) {
+        int km = distanceService.getDistanceKm(from, to);
+
+        if (km < 0) {
+            throw new IllegalStateException("Invalid distance");
+        }
+
+        return BASE_FARE + km * RATE_PER_KM;
+    }
+}
+
+
+3. FareCalculatorTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class FareCalculatorTest {
+
+    @Test
+    void fareForTenKm() {
+        DistanceService stub = (from, to) -> 10;
+        FareCalculator calculator = new FareCalculator(stub);
+
+        assertEquals(170,
+            calculator.fare("Chennai", "Tambaram"));
+    }
+
+    @Test
+    void fareForZeroKm() {
+        FareCalculator calculator =
+            new FareCalculator((from, to) -> 0);
+
+        assertEquals(50,
+            calculator.fare("Guindy", "Guindy"));
+    }
+
+    @Test
+    void invalidDistanceThrows() {
+        FareCalculator calculator =
+            new FareCalculator((from, to) -> -5);
+
+        assertThrows(IllegalStateException.class,
+            () -> calculator.fare("A", "B"));
+    }
+}
+
+
+INPUT
+Test Case	Distance	Calculation	Expected Output
+Fare for 10 km	10 km	50 + (12 × 10)	170
+Fare for 0 km	0 km	50 + (12 × 0)	50
+Invalid distance	-5 km	Invalid distance	Exception
+
+OUTPUT
+$ mvn test
+
+Running FareCalculatorTest
+
+Tests run: 3
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases using a stub and a driver were executed successfully to unit test the fare calculation module, and the output was verified.
