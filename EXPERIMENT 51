@@ -1,0 +1,76 @@
+EXPERIMENT 51 – REGRESSION TESTING OF LOGIN AND LOGOUT USING SELENIUM
+AIM
+To write a Selenium WebDriver program to implement regression testing of the login and logout functionality.
+ALGORITHM
+1. Create a Maven project and add the Selenium 4 dependency.
+2. Create ChromeDriver and WebDriverWait with a timeout of 10 seconds.
+3. Login using valid credentials and verify the Products page.
+4. Open the menu and click Logout.
+5. Verify that the login button is displayed again.
+6. Run the script after every application change to detect defects.
+7. Close the browser.
+CODE
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class Exercise51 {
+    public static void main(String[] args) throws Exception {
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.manage().window().maximize();
+
+            WebDriverWait wait = new WebDriverWait(
+                driver, Duration.ofSeconds(10));
+
+            driver.get("https://www.saucedemo.com");
+
+            driver.findElement(By.id("user-name"))
+                .sendKeys("standard_user");
+
+            driver.findElement(By.id("password"))
+                .sendKeys("secret_sauce");
+
+            driver.findElement(By.id("login-button")).click();
+
+            String heading = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                    By.className("title"))).getText();
+
+            System.out.println("Login check : " +
+                (heading.equals("Products") ? "PASS" : "FAIL"));
+
+            driver.findElement(
+                By.id("react-burger-menu-btn")).click();
+
+            wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("logout_sidebar_link"))).click();
+
+            boolean loginVisible = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                    By.id("login-button"))).isDisplayed();
+
+            System.out.println("Logout check : " +
+                (loginVisible ? "PASS" : "FAIL"));
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+INPUT
+- URL: https://www.saucedemo.com
+- Username: standard_user
+- Password: secret_sauce
+OUTPUT
+Login check : PASS
+Logout check : PASS
+
+
+RESULT
+Thus, the Selenium WebDriver program to implement regression testing of login and logout functionality was executed successfully, and the output was verified.
