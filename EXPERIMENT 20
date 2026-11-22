@@ -1,0 +1,40 @@
+EXPERIMENT 20 – COMPARING SUMMARY REPORT AND AGGREGATE REPORT USING APACHE JMETER
+
+AIM
+To use Apache JMeter to compare the Summary Report and Aggregate Report listeners.
+ALGORITHM
+1. Start Apache JMeter and create a Test Plan.
+2. Add a Thread Group.
+3. Set Number of Threads = 10, Ramp-up Period = 10 seconds and Loop Count = 1.
+4. Add two HTTP Request samplers: GET / and GET /status_codes/404.
+5. Add Summary Report, Aggregate Report and Graph Results listeners.
+6. Run the plan and compare the report columns.
+7. Identify the metrics available only in the Aggregate Report.
+TEST PLAN CONFIGURATION
+Element	Property	Value
+Thread Group	Number of Threads	10
+Thread Group	Ramp-up Period	10 seconds
+Thread Group	Loop Count	1
+HTTP Request 1	Name	Home
+HTTP Request 1	Server Name	the-internet.herokuapp.com
+HTTP Request 1	Method / Path	GET /
+HTTP Request 2	Name	Status 404
+HTTP Request 2	Method / Path	GET /status_codes/404
+Listeners	Added	Summary Report, Aggregate Report, Graph Results
+
+INPUT
+- Number of users: 10
+- Loop count: 1
+- Request 1: GET / (returns 200)
+- Request 2: GET /status_codes/404 (returns 404)
+- Total samples: \(10 \times 2 = 20\)
+OUTPUT
+Aggregate Report
+Label	Samples	Error %
+Home	10	0.00%
+Status 404	10	100.00%
+TOTAL	20	50.00%
+
+Other report columns include Average, Median, 90% Line, 95% Line and 99% Line. Response times depend on the system and network.
+RESULT
+Thus, Apache JMeter was used to compare the Summary Report and Aggregate Report listeners, and the results were verified.
