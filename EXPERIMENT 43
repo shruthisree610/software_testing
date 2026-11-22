@@ -1,0 +1,41 @@
+EXPERIMENT 43 – SYSTEM TESTING OF E-COMMERCE CHECKOUT PROCESS
+AIM
+To create test scenarios for an e-commerce checkout process for system testing. System testing checks the complete and integrated application from the user's point of view, including alternate and failure flows.
+ALGORITHM
+1. Study the checkout process end to end: cart, address, delivery, coupon, payment and order confirmation.
+2. Identify test scenarios covering the complete, alternate and failure flows.
+3. Write the steps and expected result of every scenario.
+4. Execute the scenarios on the integrated system and record the status.
+5. Prepare test data for users, products, coupons and successful and failed payments.
+6. Verify stored data after every scenario, including order records, stock count and payment status.
+7. Report failed scenarios as defects and stop.
+INPUT
+Pre-requisites and Test Environment
+Item	Details
+System under test	E-commerce website with cart, checkout and payment gateway (test mode)
+Test data	Registered user, in-stock and out-of-stock products
+Coupons	WELCOME10 (valid), OLD50 (expired)
+Payment data	Test card for success and invalid card for failure
+Technique	System testing of complete, alternate and failure flows
+
+Test Scenarios
+ID	Scenario	Test	Expected Result
+CK01	Registered user checkout	Login, add product, checkout and pay by card	Order placed and confirmation displayed
+CK02	Guest checkout	Add product, checkout without login and enter address	Guest order placed
+CK03	Valid coupon	Enter valid coupon	Discount applied
+CK04	Invalid coupon	Enter expired coupon	Error message; total unchanged
+CK05	Out-of-stock product	Checkout with unavailable product	Out-of-stock message; order not placed
+CK06	Payment failure	Enter invalid card number	Payment failure message; order not placed
+CK07	Change delivery address	Change address before payment	New address shown in order summary
+CK08	Order confirmation	Complete an order	Confirmation email/SMS sent and stock reduced
+CK09	Cancel an order	Cancel before shipment	Order cancelled and amount refunded
+CK10	Session timeout	Keep payment page idle for 15 minutes	Session expires and cart is retained
+
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+10	10	10	0	0	100%
+
+All 10 test scenarios passed.
+RESULT
+Thus, the test scenarios of the e-commerce checkout process were created and executed for system testing. Normal, alternate and failure flows were tested, and the output was verified.
