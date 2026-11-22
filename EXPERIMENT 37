@@ -1,0 +1,51 @@
+EXPERIMENT 37 – DATA-DRIVEN TESTING USING CSV DATA SET CONFIG IN APACHE JMETER
+AIM
+To use Apache JMeter to implement data-driven testing using the CSV Data Set Config.
+ALGORITHM
+1. Start Apache JMeter (jmeter.bat or jmeter.sh) and rename the Test Plan.
+2. Add a Thread Group under Test Plan.
+3. Create users.csv with three lines containing username, password and expected message. Save it in the JMeter bin folder.
+4. Set Number of Threads = 1 and Loop Count = 3.
+5. Add Config Element → CSV Data Set Config and configure:
+   - Filename: users.csv
+   - Variable Names: username,password,expected
+   - Delimiter: comma
+   - Recycle on EOF: False
+   - Stop thread on EOF: True
+6. Add HTTP Cookie Manager and select Clear cookies each iteration.
+7. Add HTTP Request POST /authenticate with parameters ${username} and ${password}.
+8. Add Response Assertion with pattern ${expected}.
+9. Add View Results Tree and Summary Report, run the plan and stop.
+INPUT
+File: users.csv
+Line	Content
+1	tomsmith,SuperSecretPassword!,You logged into a secure area!
+2	tomsmith,wrongpass,Your password is invalid!
+3	baduser,SuperSecretPassword!,Your username is invalid!
+
+Test Plan Configuration
+Element	Property	Value
+Thread Group	Number of Threads	1
+Thread Group	Ramp-up Period	1 second
+Thread Group	Loop Count	3
+CSV Data Set Config	Filename	users.csv
+CSV Data Set Config	Variable Names	username,password,expected
+CSV Data Set Config	Delimiter	,
+CSV Data Set Config	Recycle on EOF / Stop thread on EOF	False / True
+HTTP Cookie Manager	Clear cookies each iteration	Selected
+HTTP Request	Method / Path	POST /authenticate
+HTTP Request	Parameters	${username}, ${password}
+Response Assertion	Pattern	${expected}
+
+OUTPUT
+Summary Report
+Label	Samples	Error %
+POST /authenticate	3	0.00%
+
+View Results Tree: Three samples show the three data rows:
+1. tomsmith / SuperSecretPassword!
+2. tomsmith / wrongpass
+3. baduser / SuperSecretPassword!
+All three assertions pass.
+RESULT
+Thus, Apache JMeter was used to implement data-driven testing using the CSV Data Set Config and the results were verified.
