@@ -1,0 +1,37 @@
+EXPERIMENT 39 – CONTROLLING TEST FLOW USING LOOP, ONCE ONLY AND IF CONTROLLERS IN APACHE JMETER
+AIM
+To use Apache JMeter to control the flow of a test plan using the Loop, Once Only and If controllers.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Add User Defined Variables with variable run = yes.
+4. Set Number of Threads = 1 and Loop Count = 2.
+5. Add a Once Only Controller with HTTP Request GET /login inside it. It runs only in the first iteration.
+6. Add a Loop Controller with Loop Count = 3 and HTTP Request GET /checkboxes.
+7. Add an If Controller with condition ${__jexl3("${run}" == "yes")} and HTTP Request GET /dropdown.
+8. Add Summary Report and run the plan.
+9. Change run to no and run again to verify that the If Controller skips its request.
+INPUT – TEST PLAN CONFIGURATION
+Element	Property	Value
+User Defined Variables	run	yes
+Thread Group	Threads	1
+Thread Group	Ramp-up	1 second
+Thread Group	Loop Count	2
+Once Only Controller	Child	GET /login
+Loop Controller	Loop Count	3
+Loop Controller	Child	GET /checkboxes
+If Controller	Condition	${__jexl3("${run}" == "yes")}
+If Controller	Interpret Condition as Variable Expression	Selected
+If Controller	Child	GET /dropdown
+
+OUTPUT
+Summary Report (run = yes)
+Label	Samples
+/login	1
+/checkboxes	6
+/dropdown	2
+TOTAL	9
+
+With run = no, the /dropdown request is skipped and the total becomes 7.
+RESULT
+Thus, Apache JMeter was used to control the flow of a test plan using the Loop, Once Only and If controllers, and the results were verified.
