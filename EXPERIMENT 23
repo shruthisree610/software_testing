@@ -1,0 +1,45 @@
+EXPERIMENT 23 – BLACK-BOX TESTING ON LOGIN MODULE
+AIM
+To execute black-box testing on a login module by checking its behaviour against the specification without knowing its internal code or structure.
+ALGORITHM
+1. Study the login module specification without looking at its code.
+2. Design test cases for valid data, invalid data, blank fields, special characters, case sensitivity and account locking.
+3. Execute every test case using the given test data.
+4. Compare actual results with expected results and record Pass or Fail.
+5. Prepare a decision table for login rules and add test cases for blank fields, length limits and security.
+6. Reset the account before tests involving wrong attempts.
+7. Report failed test cases as defects.
+INPUT
+Login specifications:
+- Username: 6–20 letters or digits.
+- Password: 8–16 characters with one capital letter, one digit and one special character.
+- Account locked after 3 wrong attempts.
+- Test account: student / Secret@123
+Decision Table
+Condition / Action	R1	R2	R3	R4
+Valid username	Yes	Yes	No	No
+Valid password	Yes	No	Yes	No
+Action	Home page	Error message	Error message	Error message
+
+Test Cases
+TC ID	Test Scenario	Test Data	Expected Result	Status
+TC01	Valid username and password	student / Secret@123	Home page displayed	Pass
+TC02	Wrong password	student / wrong	Invalid credentials	Pass
+TC03	Wrong username	stud / Secret@123	Invalid credentials	Pass
+TC04	Both fields blank	Blank / Blank	Both fields required	Pass
+TC05	Username blank	Blank / Secret@123	Username required	Pass
+TC06	Password blank	student / Blank	Password required	Pass
+TC07	Case-sensitive password	student / secret@123	Invalid credentials	Pass
+TC08	SQL injection	' OR '1'='1 / abc	Login rejected	Pass
+TC09	Password masking	Any password	Characters shown as dots	Pass
+TC10	Account lock	3 wrong attempts	Account locked	Pass
+TC11	Back button after logout	Login, logout, press Back	Login page displayed; session not reused	Pass
+TC12	Spaces around username	student / Secret@123	Login accepted after trimming spaces	Pass
+
+OUTPUT
+Test Execution Summary
+Total Designed	Executed	Passed	Failed	Blocked	Pass %
+12	12	12	0	0	100%
+
+RESULT
+Thus, the black-box test cases of the login module were executed and the output was verified. Valid, invalid, blank and security inputs were tested against the specification.
