@@ -1,0 +1,179 @@
+EXPERIMENT 47 – INTEGRATION TESTING FOR LIBRARY MANAGEMENT SYSTEM USING JUNIT
+AIM
+To write JUnit test cases to execute integration testing for a library management system.
+ALGORITHM
+1. Create a Maven project with the junit-jupiter dependency.
+2. Write the classes Book, Member (borrowing limit = 2) and Library.
+3. Create real Book and Member objects in @BeforeEach to test the modules together.
+4. Write six integration tests:
+   - Issue a book.
+   - Issue the same book twice.
+   - Exceed the borrowing limit.
+   - Return a book.
+   - Return a book not borrowed.
+   - Try borrowing with an unknown member.
+5. Run the tests using mvn test and verify the output.
+CODE
+1. Book.java
+public class Book {
+    private final String isbn, title;
+    private boolean available = true;
+
+    public Book(String isbn, String title) {
+        this.isbn = isbn;
+        this.title = title;
+    }
+
+    public String getIsbn() { return isbn; }
+    public String getTitle() { return title; }
+    public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+}
+
+
+2. Member.java
+import java.util.*;
+
+public class Member {
+    public static final int LIMIT = 2;
+    private final String id;
+    private final List<Book> borrowed = new ArrayList<>();
+
+    public Member(String id) { this.id = id; }
+
+    public String getId() { return id; }
+    public List<Book> getBorrowed() { return borrowed; }
+    public boolean canBorrow() {
+        return borrowed.size() < LIMIT;
+    }
+}
+
+
+3. Library.java
+import java.util.*;
+
+public class Library {
+    private final Map<String, Book> books = new HashMap<>();
+    private final Map<String, Member> members = new HashMap<>();
+
+    public void addBook(Book b) {
+        books.put(b.getIsbn(), b);
+    }
+
+    public void addMember(Member m) {
+        members.put(m.getId(), m);
+    }
+
+    public boolean issueBook(String memberId, String isbn) {
+        Member m = members.get(memberId);
+        Book b = books.get(isbn);
+
+        if (m == null || b == null ||
+            !b.isAvailable() || !m.canBorrow())
+            return false;
+
+        b.setAvailable(false);
+        m.getBorrowed().add(b);
+        return true;
+    }
+
+    public boolean returnBook(String memberId, String isbn) {
+        Member m = members.get(memberId);
+        Book b = books.get(isbn);
+
+        if (m == null || b == null ||
+            !m.getBorrowed().remove(b))
+            return false;
+
+        b.setAvailable(true);
+        return true;
+    }
+}
+
+
+4. LibraryIntegrationTest.java
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class LibraryIntegrationTest {
+    private Library library;
+    private Book b1, b2, b3;
+
+    @BeforeEach
+    void setUp() {
+        library = new Library();
+
+        b1 = new Book("111", "Software Testing");
+        b2 = new Book("222", "Effective Java");
+        b3 = new Book("333", "Exploratory Testing");
+
+        library.addBook(b1);
+        library.addBook(b2);
+        library.addBook(b3);
+        library.addMember(new Member("M1"));
+    }
+
+    @Test
+    void issueAvailableBook() {
+        assertTrue(library.issueBook("M1", "111"));
+        assertFalse(b1.isAvailable());
+    }
+
+    @Test
+    void sameBookCannotBeIssuedTwice() {
+        assertTrue(library.issueBook("M1", "111"));
+        assertFalse(library.issueBook("M1", "111"));
+    }
+
+    @Test
+    void borrowingLimitIsEnforced() {
+        assertTrue(library.issueBook("M1", "111"));
+        assertTrue(library.issueBook("M1", "222"));
+        assertFalse(library.issueBook("M1", "333"));
+    }
+
+    @Test
+    void returnBookMakesItAvailable() {
+        library.issueBook("M1", "111");
+        assertTrue(library.returnBook("M1", "111"));
+        assertTrue(b1.isAvailable());
+    }
+
+    @Test
+    void returnBookNotBorrowedFails() {
+        assertFalse(library.returnBook("M1", "222"));
+    }
+
+    @Test
+    void unknownMemberCannotBorrow() {
+        assertFalse(library.issueBook("M9", "111"));
+    }
+}
+
+
+INPUT
+Test Case	Input	Expected Output
+Issue available book	M1, 111	True
+Issue same book twice	M1, 111	Second issue False
+Exceed borrowing limit	M1, 111, 222, 333	Third issue False
+Return borrowed book	M1, 111	True
+Return book not borrowed	M1, 222	False
+Unknown member	M9, 111	False
+
+OUTPUT
+$ mvn test
+
+Running LibraryIntegrationTest
+
+Tests run: 6
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases for integration testing of a library management system were executed successfully, and the output was verified.
