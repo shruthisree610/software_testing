@@ -1,0 +1,89 @@
+EXPERIMENT 30 – BRANCH COVERAGE TESTING USING JUNIT
+AIM
+To write JUnit test cases to achieve branch coverage on a program that finds the largest of three numbers using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the MaxFinder class with the largest(a, b, c) method.
+3. Identify the decisions: a >= b, a >= c and b >= c.
+4. List the branches. Each decision must execute once as true and once as false.
+5. Write four tests to execute every return statement:
+   - A is largest.
+   - C is largest when A is greater than or equal to B.
+   - B is largest.
+   - C is largest when B is greater than A.
+6. Add one more test with three equal numbers.
+7. Run tests using mvn test and verify branch coverage.
+CODE
+MaxFinder.java
+public class MaxFinder {
+    public static int largest(int a, int b, int c) {
+        if (a >= b) {
+            if (a >= c) {
+                return a;
+            } else {
+                return c;
+            }
+        } else {
+            if (b >= c) {
+                return b;
+            } else {
+                return c;
+            }
+        }
+    }
+}
+
+
+MaxFinderTest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MaxFinderTest {
+
+    @Test
+    void aIsLargest() {
+        assertEquals(9, MaxFinder.largest(9, 5, 3));
+    }
+
+    @Test
+    void cIsLargestWhenAGreaterThanB() {
+        assertEquals(9, MaxFinder.largest(5, 3, 9));
+    }
+
+    @Test
+    void bIsLargest() {
+        assertEquals(9, MaxFinder.largest(3, 9, 5));
+    }
+
+    @Test
+    void cIsLargestWhenBGreaterThanA() {
+        assertEquals(9, MaxFinder.largest(3, 5, 9));
+    }
+
+    @Test
+    void allNumbersEqual() {
+        assertEquals(4, MaxFinder.largest(4, 4, 4));
+    }
+}
+
+
+INPUT
+Test Case	a	b	c	Expected Output
+A is largest	9	5	3	9
+C is largest when A ≥ B	5	3	9	9
+B is largest	3	9	5	9
+C is largest when B > A	3	5	9	9
+All numbers equal	4	4	4	4
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running MaxFinderTest
+[INFO] Tests run: 5, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to achieve branch coverage on a program that finds the largest of three numbers using JUnit were executed successfully and the output was verified.
