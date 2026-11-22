@@ -1,0 +1,63 @@
+EXPERIMENT 60 – API TESTING OF WEATHER INFORMATION SERVICE USING APACHE JMETER
+AIM
+To use Apache JMeter to create test cases for API testing of a weather information service.
+ALGORITHM
+1. Start Apache JMeter and rename the Test Plan.
+2. Add a Thread Group.
+3. Set Threads = 5, Ramp-up = 5 seconds and Loop Count = 2.
+4. Add HTTP Request Defaults for the weather API server.
+5. Create Test Case 1 (valid input):
+   - GET /v1/forecast
+   - Add Response Assertion for code 200.
+   - Add JSON Assertion for $.current_weather.temperature.
+   - Add Duration Assertion of 2000 milliseconds.
+6. Create Test Case 2 (invalid input):
+   - GET /v1/forecast with latitude 999.
+   - Add Response Assertion for code 400.
+   - Select Ignore Status.
+7. Add View Results Tree and Summary Report.
+8. Run the test and verify the temperature value.
+INPUT
+Test Plan Configuration
+Element	Property	Value
+Thread Group	Threads	5
+Thread Group	Ramp-up	5 seconds
+Thread Group	Loop Count	2
+HTTP Request Defaults	Protocol	https
+HTTP Request Defaults	Server	api.open-meteo.com
+
+Test Case 1 – Valid Location
+Property	Value
+Method	GET
+Path	/v1/forecast
+Latitude	13.08
+Longitude	80.27
+current_weather	true
+Response Assertion	Code = 200
+JSON Assertion	$.current_weather.temperature
+Duration Assertion	2000 ms
+
+Test Case 2 – Invalid Latitude
+Property	Value
+Method	GET
+Path	/v1/forecast
+Latitude	999
+Longitude	80.27
+current_weather	true
+Response Assertion	Code = 400
+Ignore Status	Selected
+
+OUTPUT
+Summary Report
+Label	Samples	Error %
+TC1: Valid Location	10	0.00%
+TC2: Invalid Latitude	10	0.00%
+TOTAL	20	0.00%
+
+View Results Tree (TC1):
+
+JSON response contains current_weather with the fields:
+- temperature
+- windspeed
+RESULT
+Thus, Apache JMeter was used to create test cases for API testing of a weather information service, and the results were verified.
