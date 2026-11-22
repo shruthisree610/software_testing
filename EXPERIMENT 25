@@ -1,0 +1,93 @@
+EXPERIMENT 25 – EQUIVALENCE CLASS PARTITIONING USING JUNIT
+AIM
+To write JUnit test cases to implement equivalence class partitioning tests for a calculator using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Write the Calculator class with add(), subtract(), multiply() and divide() methods.
+3. Identify equivalence classes for addition:
+   - Positive and positive
+   - Negative and negative
+   - Positive and negative
+   - Zero and zero
+4. Write a @ParameterizedTest with @CsvSource to test one representative from each valid class.
+5. Write tests for valid division and invalid division (divisor = 0) using assertThrows().
+6. Run the tests using mvn test and verify the output.
+7. Stop.
+CODE
+Calculator.java
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by zero");
+        }
+        return a / b;
+    }
+}
+
+
+CalculatorEPTest.java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorEPTest {
+    private final Calculator calc = new Calculator();
+
+    @ParameterizedTest(name = "{0} + {1} = {2}")
+    @CsvSource({
+        "5,3,8",
+        "-5,-3,-8",
+        "5,-3,2",
+        "0,0,0"
+    })
+    void addEquivalenceClasses(int a, int b, int expected) {
+        assertEquals(expected, calc.add(a, b));
+    }
+
+    @Test
+    void divideValidClass() {
+        assertEquals(4, calc.divide(20, 5));
+    }
+
+    @Test
+    void divideInvalidClassZeroDivisor() {
+        assertThrows(ArithmeticException.class,
+            () -> calc.divide(20, 0));
+    }
+}
+
+
+INPUT
+Test	Input	Expected Output
+Positive + Positive	5 + 3	8
+Negative + Negative	-5 + -3	-8
+Positive + Negative	5 + -3	2
+Zero + Zero	0 + 0	0
+Valid Division	20 / 5	4
+Division by Zero	20 / 0	ArithmeticException
+
+OUTPUT
+$ mvn test
+
+[INFO] TESTS
+[INFO] Running CalculatorEPTest
+[INFO] Tests run: 6, Failures: 0,
+       Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+
+
+RESULT
+Thus, the JUnit test cases to implement equivalence class partitioning tests for a calculator using JUnit were executed successfully and the output was verified.
