@@ -1,0 +1,129 @@
+EXPERIMENT 45 – UNIT TESTING OF BANK ACCOUNT MANAGEMENT USING JUNIT
+AIM
+To write JUnit test cases to implement unit testing for a bank account management application using JUnit.
+ALGORITHM
+1. Create a Maven project and add the JUnit 5 junit-jupiter dependency to pom.xml.
+2. Create the BankAccount class with deposit(), withdraw() and getBalance() methods.
+3. Add validations for negative amounts and insufficient balance.
+4. Create BankAccountTest and initialize an account with balance 5000 before each test using @BeforeEach.
+5. Write tests for deposit, withdrawal, insufficient balance, negative deposit and negative opening balance.
+6. Run the tests using mvn test and verify the results.
+CODE
+BankAccount.java
+public class BankAccount {
+    private final String accountNo;
+    private double balance;
+
+    public BankAccount(String accountNo, double openingBalance) {
+        if (openingBalance < 0) {
+            throw new IllegalArgumentException(
+                "Opening balance cannot be negative");
+        }
+        this.accountNo = accountNo;
+        this.balance = openingBalance;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                "Deposit must be positive");
+        }
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                "Withdrawal must be positive");
+        }
+        if (amount > balance) {
+            throw new IllegalStateException(
+                "Insufficient balance");
+        }
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+}
+
+
+BankAccountTest.java
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BankAccountTest {
+    private BankAccount account;
+
+    @BeforeEach
+    void setUp() {
+        account = new BankAccount("ACC1001", 5000);
+    }
+
+    @Test
+    void initialBalanceIsStored() {
+        assertEquals(5000, account.getBalance(), 0.001);
+    }
+
+    @Test
+    void depositIncreasesBalance() {
+        account.deposit(1000);
+        assertEquals(6000, account.getBalance(), 0.001);
+    }
+
+    @Test
+    void withdrawDecreasesBalance() {
+        account.withdraw(2000);
+        assertEquals(3000, account.getBalance(), 0.001);
+    }
+
+    @Test
+    void withdrawMoreThanBalanceThrows() {
+        assertThrows(IllegalStateException.class,
+            () -> account.withdraw(6000));
+    }
+
+    @Test
+    void negativeDepositThrows() {
+        assertThrows(IllegalArgumentException.class,
+            () -> account.deposit(-100));
+    }
+
+    @Test
+    void negativeOpeningBalanceThrows() {
+        assertThrows(IllegalArgumentException.class,
+            () -> new BankAccount("ACC1002", -1));
+    }
+}
+
+
+INPUT
+Operation	Input	Expected Output
+Initial balance	5000	5000
+Deposit	1000	6000
+Withdraw	2000	3000
+Withdraw more than balance	6000	Insufficient balance exception
+Negative deposit	-100	IllegalArgumentException
+Negative opening balance	-1	IllegalArgumentException
+
+OUTPUT
+$ mvn test
+
+Running BankAccountTest
+
+Tests run: 6
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+RESULT
+Thus, JUnit test cases for unit testing a bank account management application were executed successfully, and the output was verified.
